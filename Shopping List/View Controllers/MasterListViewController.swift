@@ -15,7 +15,7 @@ class MasterListViewController: ListViewController, AddItemViewControllerDelegat
 	
     weak var delegate: MasterListViewControllerDelegate?
 	var sections = [Section]()                // Data.
-	
+	var currentTextField = UITextField()
 	// MARK: - Life Cycle
 	
 	override func viewDidLoad() {
@@ -35,7 +35,24 @@ class MasterListViewController: ListViewController, AddItemViewControllerDelegat
 		tableView.rowHeight = UITableViewAutomaticDimension
 		
 		tableView.register(CollapsibleTableViewHeader.nib, forHeaderFooterViewReuseIdentifier: CollapsibleTableViewHeader.identifier)
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "<Shopping List",
+                                                            style: .plain,
+                                                            target: self,
+                                                            action: #selector(back))
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(tapClick))
+        tableView.addGestureRecognizer(tap)
 	}
+    
+    @objc func back() {
+        navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func tapClick() {
+        currentTextField.resignFirstResponder()
+        
+    }
 	
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -264,19 +281,41 @@ class MasterListViewController: ListViewController, AddItemViewControllerDelegat
         tableView.reloadData()
     }
 
+    // MARK: - Text Field Stuff
+    
+    override func textFieldDidBeginEditing(_ textField: UITextField) {
+        super.textFieldDidBeginEditing(textField)
+        currentTextField = textField
+        
+    }
 	
 	// MARK: - Text Field Stuff
 	
 	func textFieldDidEndEditing(_ textField: UITextField) {
 		let location = textField.convert(textField.bounds.origin, to: self.tableView)
 		let textFieldIndexPath = self.tableView.indexPathForRow(at: location)
-		
-		let trimmedString = textField.text!.trimmingCharacters(in: .whitespaces)
-		sections[(textFieldIndexPath?.section)!].masterListItem[(textFieldIndexPath?.row)!].name = trimmedString
-		tableView.reloadData()
-		saveData()
-		isEditingTextField = false
-		
+        
+        // enable checkbox
+        let cell = tableView.cellForRow(at: textFieldIndexPath!) as! MasterListCell
+        isEditingTextField = false
+        
+        if textField == cell.textField {
+            let trimmedString = textField.text!.trimmingCharacters(in: .whitespaces)
+            sections[(textFieldIndexPath?.section)!].masterListItem[(textFieldIndexPath?.row)!].name = trimmedString
+            tableView.reloadData()
+            saveData()
+            
+        } else if textField == cell.count {
+            let trimmedString = Int(currentTextField.text!)
+            sections[(textFieldIndexPath?.section)!].masterListItem[(textFieldIndexPath?.row)!].count = trimmedString!
+            tableView.reloadData()
+            saveData()
+        } else if textField == cell.price {
+            let trimmedString = Int(cell.price.text!)
+            sections[(textFieldIndexPath?.section)!].masterListItem[(textFieldIndexPath?.row)!].price = Int(trimmedString!)
+            tableView.reloadData()
+            saveData()
+        }
 	}
 
 	func setTableViewBackground(text: String) {

@@ -12,6 +12,7 @@ class ShoppingViewController: ListViewController, AddItemViewControllerDelegate,
     var sections = [Section]()                // Data.
     var shoppingLabel = UILabel()
     var addItemLabel = UILabel()
+    var currentTextField = UITextField()
     
     
 	// MARK: - View Controller Life Cycle
@@ -69,7 +70,16 @@ class ShoppingViewController: ListViewController, AddItemViewControllerDelegate,
         let keyWindow = UIApplication.shared.windows.first!
         keyWindow.addSubview(addItemLabel)
         keyWindow.addSubview(shoppingLabel)
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(tapClick))
+        tableView.addGestureRecognizer(tap)
+        
 	}
+    
+    @objc func tapClick() {
+        currentTextField.resignFirstResponder()
+        
+    }
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
@@ -79,7 +89,7 @@ class ShoppingViewController: ListViewController, AddItemViewControllerDelegate,
         
         addItemLabel.isHidden = false
         shoppingLabel.isHidden = false
-//        loadData()
+        loadLabelData()
 		tableView.reloadData()
 		
 		setTableViewBackground(text: "No Shopping")
@@ -186,7 +196,7 @@ class ShoppingViewController: ListViewController, AddItemViewControllerDelegate,
             cell.counTextField?.text = String(item.count)
             cell.totalAmount.textColor = UIColor.darkText
             cell.totalAmount.attributedText = nil
-            cell.totalAmount.text = String(item.price*item.count)
+            cell.totalAmount.text = String(item.price)
 		}
 		cell.checkBox.isChecked = item.isInCart
 		cell.checkBox.setNeedsDisplay()
@@ -211,7 +221,7 @@ class ShoppingViewController: ListViewController, AddItemViewControllerDelegate,
                 cell.counTextField?.text = String(item.count)
                 cell.totalAmount.attributedText = nil
                 cell.totalAmount.textColor = UIColor.darkText
-                cell.totalAmount.text = String(item.price*item.count)
+                cell.totalAmount.text = String(item.price)
 			}
 			cell.setNeedsDisplay()
 			print("\(item.isInCart)")
@@ -374,7 +384,7 @@ class ShoppingViewController: ListViewController, AddItemViewControllerDelegate,
 
 	override func textFieldDidBeginEditing(_ textField: UITextField) {
 		super.textFieldDidBeginEditing(textField)
-
+        currentTextField = textField
 		// disable checkbox
 //		let location = textField.convert(textField.bounds.origin, to: self.tableView)
 //		let indexPath = tableView.indexPathForRow(at: location)
@@ -387,16 +397,28 @@ class ShoppingViewController: ListViewController, AddItemViewControllerDelegate,
 		let location = textField.convert(textField.bounds.origin, to: self.tableView)
 		let indexPath = self.tableView.indexPathForRow(at: location)
 
-		// Store the text
-		let trimmedString = textField.text!.trimmingCharacters(in: .whitespaces)
-		sections[(indexPath?.section)!].groceryItem[(indexPath?.row)!].name = trimmedString
-		tableView.reloadData()
-		saveData()
-		
-		// enable checkbox
-		let cell = tableView.cellForRow(at: indexPath!) as! ShoppingItemCell
-		cell.checkBox.isEnabled = true
-		isEditingTextField = false
+        // enable checkbox
+        let cell = tableView.cellForRow(at: indexPath!) as! ShoppingItemCell
+        cell.checkBox.isEnabled = true
+        isEditingTextField = false
+        
+        // Store the text
+        if textField == cell.textField {
+            let trimmedString = textField.text!.trimmingCharacters(in: .whitespaces)
+            sections[(indexPath?.section)!].groceryItem[(indexPath?.row)!].name = trimmedString
+            tableView.reloadData()
+            saveData()
+        } else if textField == cell.counTextField {
+            let trimmedString = Int(currentTextField.text!)
+            sections[(indexPath?.section)!].groceryItem[(indexPath?.row)!].count = trimmedString!
+            tableView.reloadData()
+            saveData()
+        } else if textField == cell.totalAmount {
+            let trimmedString = Int(cell.totalAmount.text!)
+            sections[(indexPath?.section)!].groceryItem[(indexPath?.row)!].price = Int(trimmedString!)
+            tableView.reloadData()
+            saveData()
+        }
 
 	}
 
@@ -473,5 +495,36 @@ class ShoppingViewController: ListViewController, AddItemViewControllerDelegate,
             print("Error encoding item array")
         }
     }
+    
+    func loadLabelData() {
+        // 1
+        let path = fileURL()
+        // 2
+        if let data = try? Data(contentsOf: path) {
+            // 3
+            let decoder = PropertyListDecoder()
+            do {
+                // 4
+                let dateSourceTemp = try decoder.decode([ListItem].self, from: data)
+                for listItem in dateSourceTemp {
+                    var moneyShopping = 0
+                    for section in listItem.grocery {
+                        for item in section.groceryItem {
+                            moneyShopping += item.price
+                        }
+                    }
+                    shoppingLabel.text = "ShoppingAmount:"+String(moneyShopping)
+                    var moneyItem = 0
+                    for section in listItem.grocery {
+                        for item in section.masterListItem {
+                            moneyItem += item.price
+                        }
+                    }
+                    addItemLabel.text = "AddItemAmount:"+String(moneyItem)
+                }
+            } catch {
+                print("Error decoding item array")
+            }
+        } }
 	
 }

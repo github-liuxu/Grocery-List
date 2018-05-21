@@ -100,6 +100,16 @@ class MainViewController :UITableViewController {
             do {
                 // 4
                 dateSource = try decoder.decode([ListItem].self, from: data)
+                for listItem in dateSource {
+                    var money = 0
+                    for section in listItem.grocery {
+                        for item in section.groceryItem {
+                            money += item.price
+                        }
+                    }
+                    listItem.money = String(money)
+                    
+                }
             } catch {
                 print("Error decoding item array")
             }

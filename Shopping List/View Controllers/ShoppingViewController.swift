@@ -10,11 +10,13 @@ class ShoppingViewController: ListViewController, AddItemViewControllerDelegate,
     var selectIndexPath:NSIndexPath?
     
     var sections = [Section]()                // Data.
+    var shoppingLabel = UILabel()
+    var addItemLabel = UILabel()
+    
     
 	// MARK: - View Controller Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         let listItem = dataSource![selectIndexPath!.row] as ListItem
         sections = listItem.grocery
 
@@ -40,15 +42,43 @@ class ShoppingViewController: ListViewController, AddItemViewControllerDelegate,
 		// Set Up Toolbar
 		navigationController?.toolbar.tintColor = TOOLBAR_ITEM_COLOR
 		toolbarItems = addToolbarItems()
-
+        let w = UIScreen.main.bounds.size.width
+        let h = UIScreen.main.bounds.size.height
+        
+        if CGSize(width: 1125, height: 2436) == UIScreen.main.currentMode?.size {
+            addItemLabel = UILabel(frame: CGRect(x: 0, y: Int(h-86-43), width: Int(w/2), height: 43))
+            addItemLabel.textAlignment = .left
+            addItemLabel.backgroundColor = UIColor.white;
+            
+            shoppingLabel = UILabel(frame: CGRect(x: Int(w/2), y: Int(h-86-43), width: Int(w/2), height: 43))
+            shoppingLabel.textAlignment = .right
+            shoppingLabel.backgroundColor = UIColor.white;
+        } else {
+            addItemLabel = UILabel(frame: CGRect(x: 0, y: Int(h-86), width: Int(w/2), height: 43))
+            addItemLabel.textAlignment = .left
+            addItemLabel.backgroundColor = UIColor.white;
+            
+            shoppingLabel = UILabel(frame: CGRect(x: Int(w/2), y: Int(h-86), width: Int(w/2), height: 43))
+            shoppingLabel.textAlignment = .right
+            shoppingLabel.backgroundColor = UIColor.white;
+        }
+        
+        
+        addItemLabel.text = "AddItemAmount:0"
+        shoppingLabel.text = "ShoppingAmount:0"
+        let keyWindow = UIApplication.shared.windows.first!
+        keyWindow.addSubview(addItemLabel)
+        keyWindow.addSubview(shoppingLabel)
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		
+        
 		navigationController?.navigationBar.prefersLargeTitles = true
 		navigationItem.largeTitleDisplayMode = .always
-
+        
+        addItemLabel.isHidden = false
+        shoppingLabel.isHidden = false
 //        loadData()
 		tableView.reloadData()
 		
@@ -56,6 +86,8 @@ class ShoppingViewController: ListViewController, AddItemViewControllerDelegate,
 	}
 
 	override func viewWillDisappear(_ animated: Bool) {
+        addItemLabel.isHidden = true
+        shoppingLabel.isHidden = true
 		saveData()
 	}
 
@@ -190,10 +222,24 @@ class ShoppingViewController: ListViewController, AddItemViewControllerDelegate,
 
 	
 	@objc func deletePressed() {
+        addItemLabel.isHidden = true
+        shoppingLabel.isHidden = true
+        
 		let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-		alert.addAction(UIAlertAction(title: "Clear All", style: .destructive, handler: { alert -> Void in self.deleteAll() }))
-		alert.addAction(UIAlertAction(title: "Clear Selected", style: .destructive, handler: { alert -> Void in self.deleteSelected() }))
-		alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {alert -> Void in }))
+		alert.addAction(UIAlertAction(title: "Clear All", style: .destructive, handler: { alert -> Void in
+            self.deleteAll()
+            self.addItemLabel.isHidden = false
+            self.shoppingLabel.isHidden = false
+        }))
+		alert.addAction(UIAlertAction(title: "Clear Selected", style: .destructive, handler: { alert -> Void in
+            self.deleteSelected()
+            self.addItemLabel.isHidden = false
+            self.shoppingLabel.isHidden = false
+        }))
+		alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {alert -> Void in
+            self.addItemLabel.isHidden = false
+            self.shoppingLabel.isHidden = false
+        }))
 		present(alert, animated: true, completion: nil)
 	}
 	

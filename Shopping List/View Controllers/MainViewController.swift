@@ -6,6 +6,7 @@ import Foundation
 class MainViewController :UITableViewController {
     
     var dateSource = [ListItem]()
+    var addButton = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,15 +25,15 @@ class MainViewController :UITableViewController {
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.isOpaque = true
         
-        
-        let addButton = UIButton(frame: CGRect(x: view.frame.size.width*3.0/4, y: view.frame.size.height*2.0/3, width: 60, height: 60))
+        let keyWindow = UIApplication.shared.windows.first!
+        addButton = UIButton(frame: CGRect(x: view.frame.size.width*3.0/4, y: view.frame.size.height*2.0/3, width: 60, height: 60))
         addButton.backgroundColor = Color.oldRed
         addButton.setTitleColor(UIColor.white, for: .normal)
         addButton.setTitle("+", for: UIControlState.normal)
         addButton.addTarget(self, action: #selector(addClick), for: UIControlEvents.touchUpInside)
         addButton.layer.cornerRadius = addButton.frame.size.width/2
         addButton.layer.masksToBounds = true
-        view.addSubview(addButton)
+        keyWindow.addSubview(addButton)
         
         let notificationName = "ShoppingNeedSaveData"
         NotificationCenter.default.addObserver(self, selector: #selector(notificationAction), name: NSNotification.Name(rawValue: notificationName), object: nil)
@@ -46,6 +47,12 @@ class MainViewController :UITableViewController {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .always
+        addButton.isHidden = false
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        addButton.isHidden = true
     }
     
     override func viewDidAppear(_ animated: Bool) {

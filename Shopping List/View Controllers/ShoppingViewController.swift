@@ -4,7 +4,7 @@
 
 import UIKit
 
-class GroceriesViewController: ListViewController, AddItemViewControllerDelegate,SectionsViewControllerDelegate,MasterListViewControllerDelegate {
+class ShoppingViewController: ListViewController, AddItemViewControllerDelegate,SectionsViewControllerDelegate,MasterListViewControllerDelegate {
     
     var dataSource:[ListItem]?
     var selectIndexPath:NSIndexPath?
@@ -18,7 +18,7 @@ class GroceriesViewController: ListViewController, AddItemViewControllerDelegate
         let listItem = dataSource![selectIndexPath!.row] as ListItem
         sections = listItem.grocery
 
-		title = "Grocery List"
+		title = "Shopping List"
 		// Set Up Navigation Bar
         navigationController?.toolbar.isHidden = false;
 		navigationController?.navigationBar.prefersLargeTitles = true
@@ -32,12 +32,6 @@ class GroceriesViewController: ListViewController, AddItemViewControllerDelegate
 
 		// Set Up Navigation Items
 		navigationItem.largeTitleDisplayMode = .always
-		navigationItem.leftBarButtonItem = editButtonItem
-        let backButtonItem = UIBarButtonItem(title: "Back",
-                        style: .plain,
-                        target: self,
-                        action: #selector(goBack))
-        navigationItem.leftBarButtonItems = [backButtonItem,editButtonItem]
 		navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Saved Items",
 		                                                    style: .plain,
 		                                                    target: self,
@@ -58,7 +52,7 @@ class GroceriesViewController: ListViewController, AddItemViewControllerDelegate
 //        loadData()
 		tableView.reloadData()
 		
-		setTableViewBackground(text: "No Groceries")
+		setTableViewBackground(text: "No Shopping")
 	}
 
 	override func viewWillDisappear(_ animated: Bool) {
@@ -72,7 +66,7 @@ class GroceriesViewController: ListViewController, AddItemViewControllerDelegate
 		let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addPressed))
 		let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
 		let deleteButton = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deletePressed))
-		let sectionsButtonItem = UIBarButtonItem(title: "Edit Sections", style: .plain, target: self, action: #selector(self.aislesPressed))
+		let sectionsButtonItem = UIBarButtonItem(title: "Edit Category", style: .plain, target: self, action: #selector(self.aislesPressed))
 		
 		items.append(deleteButton)
 		items.append(flexSpace)
@@ -132,21 +126,35 @@ class GroceriesViewController: ListViewController, AddItemViewControllerDelegate
 	//
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-		let cell = tableView.dequeueReusableCell(withIdentifier: "GroceryCell", for: indexPath) as! GroceryItemCell
+		let cell = tableView.dequeueReusableCell(withIdentifier: "ShoppingCell", for: indexPath) as! ShoppingItemCell
 
 		// get item from data model
 		let item = sections[indexPath.section].groceryItem[indexPath.row]
 		let attributeString = NSMutableAttributedString(string: item.name)
 		attributeString.addAttribute(NSAttributedStringKey.strikethroughStyle, value: 1, range: NSMakeRange(0, attributeString.length))
+        let countString = NSMutableAttributedString(string: String(item.count))
+        attributeString.addAttribute(NSAttributedStringKey.strikethroughStyle, value: 1, range: NSMakeRange(0, attributeString.length))
+        let amountString = NSMutableAttributedString(string: String(item.price*item.count))
+        attributeString.addAttribute(NSAttributedStringKey.strikethroughStyle, value: 1, range: NSMakeRange(0, attributeString.length))
 
 		// setup text, format, and color
 		if item.isInCart {
 			cell.textField.textColor = UIColor.gray
 			cell.textField.attributedText = attributeString
+            cell.counTextField.textColor = UIColor.gray
+            cell.counTextField.attributedText = countString
+            cell.totalAmount.textColor = UIColor.gray
+            cell.totalAmount.attributedText = amountString
 		} else {
 			cell.textField.textColor = UIColor.darkText
 			cell.textField.attributedText = nil
 			cell.textField?.text = item.name
+            cell.counTextField.textColor = UIColor.darkText
+            cell.counTextField.attributedText = nil
+            cell.counTextField?.text = String(item.count)
+            cell.totalAmount.textColor = UIColor.darkText
+            cell.totalAmount.attributedText = nil
+            cell.totalAmount.text = String(item.price*item.count)
 		}
 		cell.checkBox.isChecked = item.isInCart
 		cell.checkBox.setNeedsDisplay()
@@ -158,10 +166,20 @@ class GroceriesViewController: ListViewController, AddItemViewControllerDelegate
 			if item.isInCart {
 				cell.textField.textColor = UIColor.gray
 				cell.textField.attributedText = attributeString
+                cell.counTextField.textColor = UIColor.gray
+                cell.counTextField.attributedText = countString
+                cell.totalAmount.textColor = UIColor.gray
+                cell.totalAmount.attributedText = amountString
 			} else {
 				cell.textField.attributedText = nil
 				cell.textField.textColor = UIColor.darkText
 				cell.textField.text = item.name
+                cell.counTextField.attributedText = nil
+                cell.counTextField.textColor = UIColor.darkText
+                cell.counTextField?.text = String(item.count)
+                cell.totalAmount.attributedText = nil
+                cell.totalAmount.textColor = UIColor.darkText
+                cell.totalAmount.text = String(item.price*item.count)
 			}
 			cell.setNeedsDisplay()
 			print("\(item.isInCart)")
@@ -200,7 +218,7 @@ class GroceriesViewController: ListViewController, AddItemViewControllerDelegate
 		}
 		saveData()
 		tableView.performBatchUpdates({	tableView.deleteRows(at: indicesOfSelected, with: .right) }, completion: { finished in self.tableView.reloadData() })
-		setTableViewBackground(text: "No Groceries")
+		setTableViewBackground(text: "No Shopping")
 		isEditing = false
 	}
 	
@@ -211,7 +229,7 @@ class GroceriesViewController: ListViewController, AddItemViewControllerDelegate
 		}
 		saveData()
 		UIView.transition(with: tableView, duration: 0.35, options: .transitionCrossDissolve, animations: { self.tableView.reloadData() }, completion: nil)
-		setTableViewBackground(text: "No Groceries")
+		setTableViewBackground(text: "No Shopping")
 		isEditing = false
 	}
 
@@ -225,7 +243,7 @@ class GroceriesViewController: ListViewController, AddItemViewControllerDelegate
 			saveData()
 			// Delete from the table
 			tableView.performBatchUpdates({	tableView.deleteRows(at: [indexPath], with: .automatic)}, completion: { finished in tableView.reloadData() })
-			setTableViewBackground(text: "No Groceries")
+			setTableViewBackground(text: "No Shopping")
 		}
     }
 
@@ -251,10 +269,10 @@ class GroceriesViewController: ListViewController, AddItemViewControllerDelegate
 			addItemVC.setML = false
 			addItemVC.sections = sections
 			addItemVC.delegate = self
-        } else if segue.identifier == "AddSection_GroceriesVC" {
+        } else if segue.identifier == "AddCatagory_ShoppingVC" {
             let navigation = segue.destination as! UINavigationController
-            var sectionsVC = SectionsViewController()
-            sectionsVC = navigation.viewControllers[0] as! SectionsViewController
+            var sectionsVC = CategoryViewController()
+            sectionsVC = navigation.viewControllers[0] as! CategoryViewController
             sectionsVC.sections = sections
             sectionsVC.delegate = self
         } else if segue.identifier == "SavedItemsSegue" {
@@ -270,7 +288,7 @@ class GroceriesViewController: ListViewController, AddItemViewControllerDelegate
 			
 			let alert = UIAlertController(title: "Whoops!", message: "There are no aisles to put an item in. Press OK to create one.", preferredStyle: .alert)
 			alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
-				self.performSegue(withIdentifier: "AddSection_GroceriesVC", sender: nil)
+				self.performSegue(withIdentifier: "AddSection_ShoppingVC", sender: nil)
 			}))
 			alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
 			self.present(alert, animated: true, completion: nil)
@@ -282,7 +300,7 @@ class GroceriesViewController: ListViewController, AddItemViewControllerDelegate
 	}
 	
 	@objc func aislesPressed() {
-		performSegue(withIdentifier: "AddSection_GroceriesVC", sender: nil)
+		performSegue(withIdentifier: "AddCatagory_ShoppingVC", sender: nil)
 	}
 	
 	@objc func gotoSavedItems() {
@@ -314,7 +332,7 @@ class GroceriesViewController: ListViewController, AddItemViewControllerDelegate
 		// disable checkbox
 //		let location = textField.convert(textField.bounds.origin, to: self.tableView)
 //		let indexPath = tableView.indexPathForRow(at: location)
-		let cell = tableView.cellForRow(at: textFieldIndexPath) as! GroceryItemCell
+		let cell = tableView.cellForRow(at: textFieldIndexPath) as! ShoppingItemCell
 		cell.checkBox.isEnabled = false
 		
 	}
@@ -330,7 +348,7 @@ class GroceriesViewController: ListViewController, AddItemViewControllerDelegate
 		saveData()
 		
 		// enable checkbox
-		let cell = tableView.cellForRow(at: indexPath!) as! GroceryItemCell
+		let cell = tableView.cellForRow(at: indexPath!) as! ShoppingItemCell
 		cell.checkBox.isEnabled = true
 		isEditingTextField = false
 

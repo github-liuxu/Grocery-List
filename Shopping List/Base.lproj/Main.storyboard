@@ -13,13 +13,13 @@
         <!--Aisles-->
         <scene sceneID="v5n-Re-ovw">
             <objects>
-                <tableViewController id="vdU-6k-oCE" customClass="SectionsViewController" customModule="Grocery_List" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="vdU-6k-oCE" customClass="CategoryViewController" customModule="Shopping_List" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="jNy-bh-2Fa">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="sectionsID" id="yj2-N9-AVE" customClass="SectionsCell" customModule="Grocery_List" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="sectionsID" id="yj2-N9-AVE" customClass="SectionsCell" customModule="Shopping_List" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="yj2-N9-AVE" id="e7e-yE-KXG">
@@ -58,7 +58,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Aisles" largeTitleDisplayMode="never" id="yF8-ud-ZL5"/>
                     <connections>
-                        <segue destination="sNp-jd-Gb9" kind="show" identifier="AddSection" id="cYK-OC-v62"/>
+                        <segue destination="sNp-jd-Gb9" kind="show" identifier="AddCategory" id="cYK-OC-v62"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="01L-Ts-Zee" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -68,7 +68,7 @@
         <!--Title-->
         <scene sceneID="IPx-bf-JjY">
             <objects>
-                <tableViewController id="sNp-jd-Gb9" customClass="AddSectionViewController" customModule="Grocery_List" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="sNp-jd-Gb9" customClass="AddCategoryViewController" customModule="Shopping_List" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="xD3-UR-WRh">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -134,20 +134,20 @@
         <!--Master List-->
         <scene sceneID="2bJ-GQ-n6F">
             <objects>
-                <tableViewController storyboardIdentifier="MasterListVC" extendedLayoutIncludesOpaqueBars="YES" id="t2P-7g-g7M" customClass="MasterListViewController" customModule="Grocery_List" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="MasterListVC" extendedLayoutIncludesOpaqueBars="YES" id="t2P-7g-g7M" customClass="MasterListViewController" customModule="Shopping_List" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="CC7-nN-WDb">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MasterListCell" id="LaL-es-v7b" customClass="MasterListCell" customModule="Grocery_List" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MasterListCell" id="LaL-es-v7b" customClass="MasterListCell" customModule="Shopping_List" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="LaL-es-v7b" id="WeG-ns-qky">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pDw-ag-nZc" customClass="AddButton" customModule="Grocery_List" customModuleProvider="target">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pDw-ag-nZc" customClass="AddButton" customModule="Shopping_List" customModuleProvider="target">
                                             <rect key="frame" x="8" y="0.0" width="44" height="44"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="pDw-ag-nZc" secondAttribute="height" multiplier="1:1" id="Bgp-mb-kHq"/>
@@ -158,12 +158,36 @@
                                             </connections>
                                         </button>
                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bRL-iu-4Di">
-                                            <rect key="frame" x="52" y="0.0" width="323" height="43.5"/>
+                                            <rect key="frame" x="52" y="0.0" width="160" height="43.5"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="160" id="wDz-wF-LQA"/>
+                                            </constraints>
                                             <nil key="textColor"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                             <connections>
                                                 <outlet property="delegate" destination="t2P-7g-g7M" id="u83-IY-nit"/>
+                                            </connections>
+                                        </textField>
+                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0aG-CA-4We">
+                                            <rect key="frame" x="228" y="0.0" width="60" height="44"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="60" id="OGP-ed-fpr"/>
+                                            </constraints>
+                                            <nil key="textColor"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <textInputTraits key="textInputTraits" autocapitalizationType="words" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                            <connections>
+                                                <outlet property="delegate" destination="t2P-7g-g7M" id="yAj-Y9-2Hh"/>
+                                            </connections>
+                                        </textField>
+                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BWF-YN-k2J">
+                                            <rect key="frame" x="304" y="0.0" width="55" height="43.5"/>
+                                            <nil key="textColor"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <textInputTraits key="textInputTraits" autocapitalizationType="words" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                            <connections>
+                                                <outlet property="delegate" destination="t2P-7g-g7M" id="nkb-jY-xv9"/>
                                             </connections>
                                         </textField>
                                     </subviews>
@@ -172,13 +196,21 @@
                                         <constraint firstAttribute="bottom" secondItem="pDw-ag-nZc" secondAttribute="bottom" id="59a-jQ-X6T"/>
                                         <constraint firstAttribute="bottom" secondItem="bRL-iu-4Di" secondAttribute="bottom" id="74Z-Q0-Qwd"/>
                                         <constraint firstItem="pDw-ag-nZc" firstAttribute="top" secondItem="WeG-ns-qky" secondAttribute="top" id="DKY-Ut-j5U"/>
+                                        <constraint firstItem="0aG-CA-4We" firstAttribute="leading" secondItem="bRL-iu-4Di" secondAttribute="trailing" constant="16" id="Fcw-lk-ZwM"/>
+                                        <constraint firstAttribute="trailing" secondItem="BWF-YN-k2J" secondAttribute="trailing" constant="16" id="Gqp-Wi-9Un"/>
                                         <constraint firstItem="bRL-iu-4Di" firstAttribute="top" secondItem="WeG-ns-qky" secondAttribute="top" id="ZgB-jI-VBP"/>
                                         <constraint firstItem="bRL-iu-4Di" firstAttribute="leading" secondItem="pDw-ag-nZc" secondAttribute="trailing" id="Zi2-33-KDl"/>
-                                        <constraint firstAttribute="trailing" secondItem="bRL-iu-4Di" secondAttribute="trailing" id="ojX-b7-Jum"/>
+                                        <constraint firstItem="BWF-YN-k2J" firstAttribute="top" secondItem="WeG-ns-qky" secondAttribute="top" id="cEI-pH-BIl"/>
+                                        <constraint firstAttribute="bottom" secondItem="BWF-YN-k2J" secondAttribute="bottom" id="kgU-5u-zFf"/>
+                                        <constraint firstItem="0aG-CA-4We" firstAttribute="top" secondItem="WeG-ns-qky" secondAttribute="top" id="n0C-pp-JzQ"/>
+                                        <constraint firstItem="BWF-YN-k2J" firstAttribute="leading" secondItem="0aG-CA-4We" secondAttribute="trailing" constant="16" id="pw7-t0-Hna"/>
+                                        <constraint firstAttribute="bottom" secondItem="0aG-CA-4We" secondAttribute="bottom" id="yog-0P-lgB"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="count" destination="0aG-CA-4We" id="qQb-Op-Rje"/>
                                     <outlet property="plusButton" destination="pDw-ag-nZc" id="kIQ-tz-yGK"/>
+                                    <outlet property="price" destination="BWF-YN-k2J" id="hgx-kc-Xml"/>
                                     <outlet property="textField" destination="bRL-iu-4Di" id="lDR-4i-mnS"/>
                                 </connections>
                             </tableViewCell>
@@ -198,23 +230,23 @@
             </objects>
             <point key="canvasLocation" x="2764" y="-802.848575712144"/>
         </scene>
-        <!--Groceries View Controller-->
+        <!--Shopping View Controller-->
         <scene sceneID="IHx-Rk-wyY">
             <objects>
-                <tableViewController extendedLayoutIncludesOpaqueBars="YES" id="AjQ-SO-NWM" customClass="GroceriesViewController" customModule="Grocery_List" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController extendedLayoutIncludesOpaqueBars="YES" id="AjQ-SO-NWM" customClass="ShoppingViewController" customModule="Shopping_List" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="JQ3-07-f2n">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="GroceryCell" id="3ze-8Q-BBm" customClass="GroceryItemCell" customModule="Grocery_List" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ShoppingCell" id="3ze-8Q-BBm" customClass="ShoppingItemCell" customModule="Shopping_List" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="3ze-8Q-BBm" id="Ulv-Wb-E0F">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4K5-dX-loj" customClass="CheckBox" customModule="Grocery_List" customModuleProvider="target">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4K5-dX-loj" customClass="CheckBox" customModule="Shopping_List" customModuleProvider="target">
                                             <rect key="frame" x="8" y="0.0" width="44" height="44"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="4K5-dX-loj" secondAttribute="height" multiplier="1:1" id="mgI-Ds-EaV"/>
@@ -224,8 +256,11 @@
                                                 <action selector="checkPressedWithSender:" destination="3ze-8Q-BBm" eventType="touchUpInside" id="ItH-Mh-dJq"/>
                                             </connections>
                                         </button>
-                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ShM-Jt-3DV">
-                                            <rect key="frame" x="52" y="0.0" width="323" height="43.5"/>
+                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ShM-Jt-3DV">
+                                            <rect key="frame" x="52" y="0.0" width="160" height="44"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="160" id="w4D-Xc-xjq"/>
+                                            </constraints>
                                             <nil key="textColor"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
@@ -233,20 +268,42 @@
                                                 <outlet property="delegate" destination="AjQ-SO-NWM" id="BAM-PH-wUu"/>
                                             </connections>
                                         </textField>
+                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="count" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lPE-ut-kqA">
+                                            <rect key="frame" x="220" y="0.0" width="60" height="43.5"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="60" id="lk4-ny-6gX"/>
+                                            </constraints>
+                                            <nil key="textColor"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                        </textField>
+                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="total amount" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tAP-gB-hhl">
+                                            <rect key="frame" x="267.5" y="0.0" width="100.5" height="43.5"/>
+                                            <nil key="textColor"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                        </textField>
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="bottom" secondItem="ShM-Jt-3DV" secondAttribute="bottom" id="0vc-jO-fzL"/>
                                         <constraint firstItem="4K5-dX-loj" firstAttribute="leading" secondItem="Ulv-Wb-E0F" secondAttribute="leading" constant="8" id="5yg-1n-RPO"/>
                                         <constraint firstItem="ShM-Jt-3DV" firstAttribute="leading" secondItem="4K5-dX-loj" secondAttribute="trailing" id="7PS-26-DCO"/>
-                                        <constraint firstAttribute="trailing" secondItem="ShM-Jt-3DV" secondAttribute="trailing" id="B1T-pk-JPi"/>
+                                        <constraint firstItem="lPE-ut-kqA" firstAttribute="leading" secondItem="ShM-Jt-3DV" secondAttribute="trailing" constant="8" id="F0K-G1-BW5"/>
                                         <constraint firstAttribute="bottom" secondItem="4K5-dX-loj" secondAttribute="bottom" id="Mc0-fQ-4K1"/>
+                                        <constraint firstAttribute="bottom" secondItem="tAP-gB-hhl" secondAttribute="bottom" id="YHK-fv-11x"/>
+                                        <constraint firstAttribute="bottom" secondItem="lPE-ut-kqA" secondAttribute="bottom" id="cJs-FI-eTo"/>
                                         <constraint firstItem="4K5-dX-loj" firstAttribute="top" secondItem="Ulv-Wb-E0F" secondAttribute="top" id="eyf-82-9sS"/>
+                                        <constraint firstItem="tAP-gB-hhl" firstAttribute="top" secondItem="Ulv-Wb-E0F" secondAttribute="top" id="f2L-AD-crP"/>
+                                        <constraint firstItem="lPE-ut-kqA" firstAttribute="top" secondItem="Ulv-Wb-E0F" secondAttribute="top" id="fb5-c5-MdB"/>
+                                        <constraint firstAttribute="trailing" secondItem="tAP-gB-hhl" secondAttribute="trailing" constant="7" id="m4p-6f-5fb"/>
                                         <constraint firstItem="ShM-Jt-3DV" firstAttribute="top" secondItem="Ulv-Wb-E0F" secondAttribute="top" id="mY4-Cs-mhK"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="checkBox" destination="4K5-dX-loj" id="DmI-7F-NK4"/>
+                                    <outlet property="counTextField" destination="lPE-ut-kqA" id="BWy-gW-Mrg"/>
                                     <outlet property="textField" destination="ShM-Jt-3DV" id="BEI-n9-Ggh"/>
+                                    <outlet property="totalAmount" destination="tAP-gB-hhl" id="r6V-vD-yaq"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -259,7 +316,7 @@
                     <connections>
                         <segue destination="wKi-tC-2TS" kind="presentation" identifier="AddItem" id="dWN-jt-CId"/>
                         <segue destination="t2P-7g-g7M" kind="show" identifier="SavedItemsSegue" id="T9G-YX-9CR"/>
-                        <segue destination="jgN-QU-rY9" kind="presentation" identifier="AddSection_GroceriesVC" id="iow-0Z-ltv"/>
+                        <segue destination="jgN-QU-rY9" kind="presentation" identifier="AddCatagory_ShoppingVC" id="iow-0Z-ltv"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bw0-Sn-f9n" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -269,7 +326,7 @@
         <!--Add an Item-->
         <scene sceneID="wdP-ga-Ajk">
             <objects>
-                <tableViewController id="gD3-DQ-bed" customClass="AddItemViewController" customModule="Grocery_List" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="gD3-DQ-bed" customClass="AddItemViewController" customModule="Shopping_List" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="pCE-Q5-YeG">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -284,8 +341,11 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="61o-ju-szm">
-                                                    <rect key="frame" x="16" y="11" width="343" height="22"/>
+                                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="61o-ju-szm">
+                                                    <rect key="frame" x="16" y="11" width="160" height="22"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="160" id="GUB-K0-crt"/>
+                                                    </constraints>
                                                     <nil key="textColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
@@ -294,12 +354,41 @@
                                                         <outlet property="delegate" destination="gD3-DQ-bed" id="Pl5-do-hAU"/>
                                                     </connections>
                                                 </textField>
+                                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Count" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="NjM-Md-ODY">
+                                                    <rect key="frame" x="192" y="11" width="60" height="22"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="60" id="WfC-ox-eqZ"/>
+                                                    </constraints>
+                                                    <nil key="textColor"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="words" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                                    <connections>
+                                                        <action selector="done" destination="gD3-DQ-bed" eventType="editingDidEndOnExit" id="ri7-H4-j6D"/>
+                                                        <outlet property="delegate" destination="gD3-DQ-bed" id="p7Z-GF-har"/>
+                                                    </connections>
+                                                </textField>
+                                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Price" textAlignment="right" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="VeK-zJ-BIf">
+                                                    <rect key="frame" x="268" y="11" width="91" height="22"/>
+                                                    <nil key="textColor"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="words" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                                    <connections>
+                                                        <action selector="done" destination="gD3-DQ-bed" eventType="editingDidEndOnExit" id="wG6-Fg-agZ"/>
+                                                        <outlet property="delegate" destination="gD3-DQ-bed" id="mau-PM-evt"/>
+                                                    </connections>
+                                                </textField>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="VeK-zJ-BIf" firstAttribute="height" secondItem="NjM-Md-ODY" secondAttribute="height" id="8Bp-8Z-zq7"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="61o-ju-szm" secondAttribute="bottom" id="Aei-id-hd5"/>
+                                                <constraint firstItem="NjM-Md-ODY" firstAttribute="leading" secondItem="61o-ju-szm" secondAttribute="trailing" constant="16" id="JhP-G4-Yyg"/>
+                                                <constraint firstItem="NjM-Md-ODY" firstAttribute="top" secondItem="61o-ju-szm" secondAttribute="top" id="PAF-SO-o6u"/>
+                                                <constraint firstAttribute="trailing" secondItem="VeK-zJ-BIf" secondAttribute="trailing" constant="16" id="PUP-NG-MjW"/>
                                                 <constraint firstItem="61o-ju-szm" firstAttribute="leading" secondItem="0W4-cA-53x" secondAttribute="leadingMargin" id="Ubg-MV-KOO"/>
+                                                <constraint firstItem="NjM-Md-ODY" firstAttribute="height" secondItem="61o-ju-szm" secondAttribute="height" id="WQo-d0-ZdE"/>
+                                                <constraint firstItem="VeK-zJ-BIf" firstAttribute="top" secondItem="NjM-Md-ODY" secondAttribute="top" id="eoe-k1-Fdx"/>
                                                 <constraint firstItem="61o-ju-szm" firstAttribute="top" secondItem="0W4-cA-53x" secondAttribute="topMargin" id="s0w-bA-dJu"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="61o-ju-szm" secondAttribute="trailing" id="wv8-Tu-EZm"/>
+                                                <constraint firstItem="VeK-zJ-BIf" firstAttribute="leading" secondItem="NjM-Md-ODY" secondAttribute="trailing" constant="16" id="zYJ-JI-VHE"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -355,7 +444,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add to Grocery List" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="96T-UJ-qCY">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add to Shopping List" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="96T-UJ-qCY">
                                                     <rect key="frame" x="16" y="14" width="286" height="15.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -460,21 +549,23 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="aisleTextLabel" destination="c5t-i0-re0" id="FFQ-2F-Jh6"/>
+                        <outlet property="countTextField" destination="NjM-Md-ODY" id="Ijf-Er-NBj"/>
                         <outlet property="doneButton" destination="6PL-MH-MQg" id="pl2-A7-Yvx"/>
                         <outlet property="grocerySwitch" destination="QKA-sL-56b" id="KhK-Yp-ypq"/>
                         <outlet property="masterListSwitch" destination="eAS-Nw-Mgu" id="TQX-3P-nRA"/>
                         <outlet property="nameTextField" destination="61o-ju-szm" id="ovM-Xr-HJc"/>
+                        <outlet property="priceTextField" destination="VeK-zJ-BIf" id="Aad-pM-5Gu"/>
                         <outlet property="sectionCell" destination="wmw-Ni-rr9" id="5ix-x6-4ma"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lJ9-oX-yvh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4100" y="-63"/>
+            <point key="canvasLocation" x="4100" y="-63.418290854572717"/>
         </scene>
         <!--Sections List View Controller-->
         <scene sceneID="xfA-pv-t3f">
             <objects>
-                <tableViewController id="yOg-dk-JAb" customClass="SectionsListViewController" customModule="Grocery_List" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="yOg-dk-JAb" customClass="SectionsListViewController" customModule="Shopping_List" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="bAg-6Q-Nvt">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -525,13 +616,13 @@
         <!--Main View Controller-->
         <scene sceneID="0Jl-1y-sfh">
             <objects>
-                <tableViewController id="rNK-5s-R4t" customClass="MainViewController" customModule="Grocery_List" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="rNK-5s-R4t" customClass="MainViewController" customModule="Shopping_List" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="tSf-Er-WhS">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="ListItemCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ListItemCell" id="ivG-Ik-yFc" customClass="ListItemCell" customModule="Grocery_List" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="ListItemCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ListItemCell" id="ivG-Ik-yFc" customClass="ListItemCell" customModule="Shopping_List" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ivG-Ik-yFc" id="zrc-xP-m6m">
@@ -583,7 +674,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="0pq-vC-mU4"/>
                     <connections>
-                        <segue destination="AjQ-SO-NWM" kind="push" identifier="GroceriesViewController" id="J3w-AZ-vAM"/>
+                        <segue destination="AjQ-SO-NWM" kind="push" identifier="ShoppingViewController" id="J3w-AZ-vAM"/>
                         <segue destination="fYB-Nm-E93" kind="presentation" identifier="AddListViewController" id="vFy-sQ-GT3"/>
                     </connections>
                 </tableViewController>
@@ -612,7 +703,7 @@
         <!--Root View Controller-->
         <scene sceneID="Lyo-2y-Hjz">
             <objects>
-                <tableViewController id="l56-nR-5tU" customClass="AddListViewController" customModule="Grocery_List" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="l56-nR-5tU" customClass="AddListViewController" customModule="Shopping_List" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="64" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="Ch0-Ul-BeA">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -699,41 +790,6 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="R4Z-7w-yMz">
-                                        <rect key="frame" x="0.0" y="163" width="375" height="64"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="R4Z-7w-yMz" id="oxK-6O-JfR">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="63.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Money" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ULL-fu-2qK">
-                                                    <rect key="frame" x="16" y="16" width="64" height="32"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="64" id="Zpl-Ux-TqY"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7Lj-lT-LpU">
-                                                    <rect key="frame" x="96" y="16" width="263" height="32"/>
-                                                    <nil key="textColor"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
-                                                </textField>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="bottomMargin" secondItem="7Lj-lT-LpU" secondAttribute="bottom" constant="5" id="9ok-N1-C97"/>
-                                                <constraint firstItem="ULL-fu-2qK" firstAttribute="leading" secondItem="oxK-6O-JfR" secondAttribute="leadingMargin" id="OhY-0o-gmT"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="7Lj-lT-LpU" secondAttribute="trailing" id="XE9-Ip-sUl"/>
-                                                <constraint firstItem="7Lj-lT-LpU" firstAttribute="top" secondItem="oxK-6O-JfR" secondAttribute="topMargin" constant="5" id="dqA-f5-M2S"/>
-                                                <constraint firstItem="7Lj-lT-LpU" firstAttribute="leading" secondItem="ULL-fu-2qK" secondAttribute="trailing" constant="16" id="g7G-D4-Q6Y"/>
-                                                <constraint firstItem="ULL-fu-2qK" firstAttribute="top" secondItem="oxK-6O-JfR" secondAttribute="topMargin" constant="5" id="glA-e9-Fyq"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="ULL-fu-2qK" secondAttribute="bottom" constant="5" id="z57-JC-x2l"/>
-                                                <constraint firstItem="7Lj-lT-LpU" firstAttribute="leading" secondItem="ULL-fu-2qK" secondAttribute="trailing" constant="16" id="ziZ-0n-jTw"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>
@@ -746,7 +802,6 @@
                     <connections>
                         <outlet property="dateLabel" destination="Xhd-3u-O9K" id="erf-WJ-eTL"/>
                         <outlet property="dateTextField" destination="L50-pq-ZvK" id="yfA-L8-gCQ"/>
-                        <outlet property="moneyTextField" destination="7Lj-lT-LpU" id="hNG-F8-cWp"/>
                         <outlet property="nameTextField" destination="dXE-56-imu" id="u2o-d4-wzI"/>
                     </connections>
                 </tableViewController>

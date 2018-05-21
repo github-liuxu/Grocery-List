@@ -15,7 +15,6 @@ class AddListViewController: UITableViewController {
     
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var dateTextField: UITextField!
-    @IBOutlet weak var moneyTextField: UITextField!
     @IBOutlet weak var dateLabel: UILabel!
     var datePicker:UIDatePicker!
     
@@ -48,7 +47,6 @@ class AddListViewController: UITableViewController {
         dateLabel.addGestureRecognizer(tap)
         
         nameTextField.delegate = self as? UITextFieldDelegate
-        moneyTextField.delegate = self as? UITextFieldDelegate
         
         tableView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(closeKeyBored)))
     }
@@ -56,14 +54,12 @@ class AddListViewController: UITableViewController {
     @objc func dateClick() {
         datePicker.isHidden = false
         nameTextField.resignFirstResponder()
-        moneyTextField.resignFirstResponder()
         dateChanged(datePicker: datePicker)
     }
     
     @objc func closeKeyBored () {
         datePicker.isHidden = true
         nameTextField.resignFirstResponder()
-        moneyTextField.resignFirstResponder()
     }
     
     @objc func dateChanged(datePicker : UIDatePicker){
@@ -87,7 +83,7 @@ class AddListViewController: UITableViewController {
     
     @objc func done () {
         if delegate != nil {
-            if (nameTextField.text!.isEmpty || dateTextField.text!.isEmpty || moneyTextField.text!.isEmpty) {
+            if (nameTextField.text!.isEmpty || dateTextField.text!.isEmpty) {
                 //alert
                 let alert = UIAlertController(title: "Tip!", message: "Please fill in all the items.", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
@@ -97,10 +93,9 @@ class AddListViewController: UITableViewController {
                 let item = ListItem()
                 item.name = nameTextField.text!
                 item.date = dateTextField.text!
-                item.money = "$" + moneyTextField.text!
                 
                 let produceSection = Section()
-                produceSection.name = "Produce Section"
+                produceSection.name = "General"
                 
                 item.grocery = [produceSection]
                 delegate?.addListCallBack(item: item)

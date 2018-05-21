@@ -1,30 +1,29 @@
 //
-//  GroceryItemCell.swift
+//  MasterListCell.swift
 //  Grocery List
 //
-//  Created by Thomas Foster on 9/27/17.
+//  Created by Thomas Foster on 9/28/17.
 //  Copyright © 2017 Thomas Foster. All rights reserved.
 //
 
 import UIKit
 
+class MasterListCell: UITableViewCell {
 
-class GroceryItemCell: UITableViewCell {
+	var plus: (() -> Void)? = nil
 
-	var check: (() -> Void)? = nil
 	
-	
-	@IBOutlet weak var checkBox: CheckBox!
+	@IBOutlet weak var plusButton: AddButton!
 	@IBOutlet weak var textField: UITextField!
-
-	@IBAction func checkPressed(sender: UIButton) {
-		if let check = self.check {
-			checkBox.setNeedsDisplay()
-			check()
+    @IBOutlet weak var count: UITextField!
+    @IBOutlet weak var price: UITextField!
+    
+	@IBAction func addPressed(sender: UIButton) {
+		if let plus = self.plus {
+			plusButton.setNeedsDisplay()
+			plus()
 		}
 	}
-	
-	
 	
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -36,8 +35,5 @@ class GroceryItemCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-	
-		
-	
 
 }

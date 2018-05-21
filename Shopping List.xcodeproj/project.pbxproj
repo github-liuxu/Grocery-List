@@ -13,17 +13,17 @@
 		30052A0B1F86DB52009C3927 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30052A0A1F86DB52009C3927 /* Constants.swift */; };
 		30052A0F1F87C9D4009C3927 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30052A0E1F87C9D4009C3927 /* EmptyView.swift */; };
 		300F2FFD1F7C18BC0014094B /* CheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300F2FFC1F7C18BC0014094B /* CheckBox.swift */; };
-		300F2FFF1F7C19220014094B /* GroceryItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300F2FFE1F7C19220014094B /* GroceryItemCell.swift */; };
+		300F2FFF1F7C19220014094B /* ShoppingItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300F2FFE1F7C19220014094B /* ShoppingItemCell.swift */; };
 		301D74A31FA02A0E00BC99B9 /* SectionToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 301D74A21FA02A0E00BC99B9 /* SectionToggle.swift */; };
 		3040020120922E9C002F9DDB /* CollapsibleTableViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3040020020922E9C002F9DDB /* CollapsibleTableViewHeader.xib */; };
 		3042CDBA1F78508C00DC6FAD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3042CDB91F78508C00DC6FAD /* AppDelegate.swift */; };
 		3042CDBF1F78508C00DC6FAD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3042CDBD1F78508C00DC6FAD /* Main.storyboard */; };
 		3042CDC11F78508C00DC6FAD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3042CDC01F78508C00DC6FAD /* Assets.xcassets */; };
 		3042CDC41F78508C00DC6FAD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3042CDC21F78508C00DC6FAD /* LaunchScreen.storyboard */; };
-		3042CDCC1F7850DA00DC6FAD /* SectionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3042CDCB1F7850DA00DC6FAD /* SectionsViewController.swift */; };
+		3042CDCC1F7850DA00DC6FAD /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3042CDCB1F7850DA00DC6FAD /* CategoryViewController.swift */; };
 		3050C6601F79BDCB00B3476A /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3050C65F1F79BDCB00B3476A /* Section.swift */; };
-		3050C66B1F79DC4E00B3476A /* AddSectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3050C66A1F79DC4E00B3476A /* AddSectionViewController.swift */; };
-		3050C66D1F79F35700B3476A /* GroceriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3050C66C1F79F35700B3476A /* GroceriesViewController.swift */; };
+		3050C66B1F79DC4E00B3476A /* AddCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3050C66A1F79DC4E00B3476A /* AddCategoryViewController.swift */; };
+		3050C66D1F79F35700B3476A /* ShoppingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3050C66C1F79F35700B3476A /* ShoppingViewController.swift */; };
 		3050C6911F7B31F500B3476A /* AddItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3050C6901F7B31F500B3476A /* AddItemViewController.swift */; };
 		3050C6941F7BDBE800B3476A /* SectionsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3050C6931F7BDBE800B3476A /* SectionsListViewController.swift */; };
 		306231EC1F8E58C0000EEE84 /* Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306231EB1F8E58C0000EEE84 /* Extentions.swift */; };
@@ -44,19 +44,19 @@
 		30052A0A1F86DB52009C3927 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		30052A0E1F87C9D4009C3927 /* EmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
 		300F2FFC1F7C18BC0014094B /* CheckBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBox.swift; sourceTree = "<group>"; };
-		300F2FFE1F7C19220014094B /* GroceryItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryItemCell.swift; sourceTree = "<group>"; };
+		300F2FFE1F7C19220014094B /* ShoppingItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingItemCell.swift; sourceTree = "<group>"; };
 		301D74A21FA02A0E00BC99B9 /* SectionToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionToggle.swift; sourceTree = "<group>"; };
 		3040020020922E9C002F9DDB /* CollapsibleTableViewHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CollapsibleTableViewHeader.xib; sourceTree = "<group>"; };
-		3042CDB61F78508C00DC6FAD /* Grocery List.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Grocery List.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3042CDB61F78508C00DC6FAD /* Shopping List.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Shopping List.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3042CDB91F78508C00DC6FAD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3042CDBE1F78508C00DC6FAD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3042CDC01F78508C00DC6FAD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3042CDC31F78508C00DC6FAD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3042CDC51F78508C00DC6FAD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3042CDCB1F7850DA00DC6FAD /* SectionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionsViewController.swift; sourceTree = "<group>"; };
+		3042CDCB1F7850DA00DC6FAD /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
 		3050C65F1F79BDCB00B3476A /* Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
-		3050C66A1F79DC4E00B3476A /* AddSectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSectionViewController.swift; sourceTree = "<group>"; };
-		3050C66C1F79F35700B3476A /* GroceriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceriesViewController.swift; sourceTree = "<group>"; };
+		3050C66A1F79DC4E00B3476A /* AddCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCategoryViewController.swift; sourceTree = "<group>"; };
+		3050C66C1F79F35700B3476A /* ShoppingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingViewController.swift; sourceTree = "<group>"; };
 		3050C6901F7B31F500B3476A /* AddItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddItemViewController.swift; sourceTree = "<group>"; };
 		3050C6931F7BDBE800B3476A /* SectionsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionsListViewController.swift; sourceTree = "<group>"; };
 		306231EB1F8E58C0000EEE84 /* Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extentions.swift; sourceTree = "<group>"; };
@@ -93,7 +93,7 @@
 			isa = PBXGroup;
 			children = (
 				0C6C2C3620AFD990004B64BA /* ListItemCell.swift */,
-				300F2FFE1F7C19220014094B /* GroceryItemCell.swift */,
+				300F2FFE1F7C19220014094B /* ShoppingItemCell.swift */,
 				3067D5E91F7DF74300A75527 /* MasterListCell.swift */,
 				30C5B00F1F940DA400B667CE /* SectionsCell.swift */,
 				300F2FFC1F7C18BC0014094B /* CheckBox.swift */,
@@ -110,7 +110,7 @@
 		3042CDAD1F78508C00DC6FAD = {
 			isa = PBXGroup;
 			children = (
-				3042CDB81F78508C00DC6FAD /* Grocery List */,
+				3042CDB81F78508C00DC6FAD /* Shopping List */,
 				3042CDB71F78508C00DC6FAD /* Products */,
 			);
 			sourceTree = "<group>";
@@ -118,12 +118,12 @@
 		3042CDB71F78508C00DC6FAD /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				3042CDB61F78508C00DC6FAD /* Grocery List.app */,
+				3042CDB61F78508C00DC6FAD /* Shopping List.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		3042CDB81F78508C00DC6FAD /* Grocery List */ = {
+		3042CDB81F78508C00DC6FAD /* Shopping List */ = {
 			isa = PBXGroup;
 			children = (
 				3042CDB91F78508C00DC6FAD /* AppDelegate.swift */,
@@ -138,16 +138,16 @@
 				3042CDC51F78508C00DC6FAD /* Info.plist */,
 				3040020020922E9C002F9DDB /* CollapsibleTableViewHeader.xib */,
 			);
-			path = "Grocery List";
+			path = "Shopping List";
 			sourceTree = "<group>";
 		};
-		3050C6631F79C38E00B3476A /* Sections */ = {
+		3050C6631F79C38E00B3476A /* Category */ = {
 			isa = PBXGroup;
 			children = (
-				3042CDCB1F7850DA00DC6FAD /* SectionsViewController.swift */,
-				3050C66A1F79DC4E00B3476A /* AddSectionViewController.swift */,
+				3042CDCB1F7850DA00DC6FAD /* CategoryViewController.swift */,
+				3050C66A1F79DC4E00B3476A /* AddCategoryViewController.swift */,
 			);
-			path = Sections;
+			path = Category;
 			sourceTree = "<group>";
 		};
 		306231EF1F904E2F000EEE84 /* Add Item */ = {
@@ -172,11 +172,11 @@
 			children = (
 				306231ED1F8E5B6F000EEE84 /* ListViewController.swift */,
 				0C6C2C3420AFCF69004B64BA /* MainViewController.swift */,
-				3050C66C1F79F35700B3476A /* GroceriesViewController.swift */,
+				3050C66C1F79F35700B3476A /* ShoppingViewController.swift */,
 				3067D5E71F7DF61D00A75527 /* MasterListViewController.swift */,
 				0C6C2C3820AFEF9D004B64BA /* Add List */,
 				306231EF1F904E2F000EEE84 /* Add Item */,
-				3050C6631F79C38E00B3476A /* Sections */,
+				3050C6631F79C38E00B3476A /* Category */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -184,9 +184,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		3042CDB51F78508C00DC6FAD /* Grocery List */ = {
+		3042CDB51F78508C00DC6FAD /* Shopping List */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3042CDC81F78508C00DC6FAD /* Build configuration list for PBXNativeTarget "Grocery List" */;
+			buildConfigurationList = 3042CDC81F78508C00DC6FAD /* Build configuration list for PBXNativeTarget "Shopping List" */;
 			buildPhases = (
 				3042CDB21F78508C00DC6FAD /* Sources */,
 				3042CDB31F78508C00DC6FAD /* Frameworks */,
@@ -196,9 +196,9 @@
 			);
 			dependencies = (
 			);
-			name = "Grocery List";
+			name = "Shopping List";
 			productName = "Grocery List";
-			productReference = 3042CDB61F78508C00DC6FAD /* Grocery List.app */;
+			productReference = 3042CDB61F78508C00DC6FAD /* Shopping List.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -217,7 +217,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 3042CDB11F78508C00DC6FAD /* Build configuration list for PBXProject "Grocery List" */;
+			buildConfigurationList = 3042CDB11F78508C00DC6FAD /* Build configuration list for PBXProject "Shopping List" */;
 			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -230,7 +230,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				3042CDB51F78508C00DC6FAD /* Grocery List */,
+				3042CDB51F78508C00DC6FAD /* Shopping List */,
 			);
 		};
 /* End PBXProject section */
@@ -254,10 +254,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3042CDCC1F7850DA00DC6FAD /* SectionsViewController.swift in Sources */,
+				3042CDCC1F7850DA00DC6FAD /* CategoryViewController.swift in Sources */,
 				0C6C2C3720AFD990004B64BA /* ListItemCell.swift in Sources */,
 				0C6C2C3520AFCF69004B64BA /* MainViewController.swift in Sources */,
-				3050C66D1F79F35700B3476A /* GroceriesViewController.swift in Sources */,
+				3050C66D1F79F35700B3476A /* ShoppingViewController.swift in Sources */,
 				300F2FFD1F7C18BC0014094B /* CheckBox.swift in Sources */,
 				3067D5EA1F7DF74300A75527 /* MasterListCell.swift in Sources */,
 				3050C6601F79BDCB00B3476A /* Section.swift in Sources */,
@@ -269,11 +269,11 @@
 				30052A0B1F86DB52009C3927 /* Constants.swift in Sources */,
 				3050C6941F7BDBE800B3476A /* SectionsListViewController.swift in Sources */,
 				301D74A31FA02A0E00BC99B9 /* SectionToggle.swift in Sources */,
-				300F2FFF1F7C19220014094B /* GroceryItemCell.swift in Sources */,
+				300F2FFF1F7C19220014094B /* ShoppingItemCell.swift in Sources */,
 				30CCF4301F9A70B8003CAD0C /* Arrow.swift in Sources */,
 				3050C6911F7B31F500B3476A /* AddItemViewController.swift in Sources */,
 				0C6C2C3A20AFEFB9004B64BA /* AddListViewController.swift in Sources */,
-				3050C66B1F79DC4E00B3476A /* AddSectionViewController.swift in Sources */,
+				3050C66B1F79DC4E00B3476A /* AddCategoryViewController.swift in Sources */,
 				307300E01F82956A003AC208 /* AddItemCell.swift in Sources */,
 				3067D5E81F7DF61D00A75527 /* MasterListViewController.swift in Sources */,
 				3067D5EC1F7DF76600A75527 /* AddButton.swift in Sources */,
@@ -418,7 +418,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Z5E3E2D8FE;
-				INFOPLIST_FILE = "Grocery List/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Shopping List/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.liudongxu.111;
@@ -437,7 +437,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Z5E3E2D8FE;
-				INFOPLIST_FILE = "Grocery List/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Shopping List/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.liudongxu.111;
@@ -451,7 +451,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		3042CDB11F78508C00DC6FAD /* Build configuration list for PBXProject "Grocery List" */ = {
+		3042CDB11F78508C00DC6FAD /* Build configuration list for PBXProject "Shopping List" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3042CDC61F78508C00DC6FAD /* Debug */,
@@ -460,7 +460,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3042CDC81F78508C00DC6FAD /* Build configuration list for PBXNativeTarget "Grocery List" */ = {
+		3042CDC81F78508C00DC6FAD /* Build configuration list for PBXNativeTarget "Shopping List" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3042CDC91F78508C00DC6FAD /* Debug */,

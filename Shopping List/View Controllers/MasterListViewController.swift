@@ -113,6 +113,8 @@ class MasterListViewController: ListViewController, AddItemViewControllerDelegat
 		let item = sections[indexPath.section].masterListItem[indexPath.row]
 		var index: Int = 0
 		cell.textField.text = item.name
+        cell.count.text = String(item.count)
+        cell.price.text = String(item.price)
 		item.isOnGroceryList = false
 		
 		
@@ -221,8 +223,8 @@ class MasterListViewController: ListViewController, AddItemViewControllerDelegat
 			addVC.delegate = self
         } else if segue.identifier == "AddSection" {
             let navigation = segue.destination as! UINavigationController
-            var sectionsVC = SectionsViewController()
-            sectionsVC = navigation.viewControllers[0] as! SectionsViewController
+            var sectionsVC = CategoryViewController()
+            sectionsVC = navigation.viewControllers[0] as! CategoryViewController
             sectionsVC.sections = sections
             sectionsVC.delegate = self
         }

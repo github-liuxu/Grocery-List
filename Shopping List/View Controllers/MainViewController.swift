@@ -28,13 +28,13 @@ class MainViewController :UITableViewController {
         let addButton = UIButton(frame: CGRect(x: view.frame.size.width*3.0/4, y: view.frame.size.height*2.0/3, width: 60, height: 60))
         addButton.backgroundColor = Color.oldRed
         addButton.setTitleColor(UIColor.white, for: .normal)
-        addButton.setTitle("Add", for: UIControlState.normal)
+        addButton.setTitle("+", for: UIControlState.normal)
         addButton.addTarget(self, action: #selector(addClick), for: UIControlEvents.touchUpInside)
         addButton.layer.cornerRadius = addButton.frame.size.width/2
         addButton.layer.masksToBounds = true
         view.addSubview(addButton)
         
-        let notificationName = "GroceryNeedSaveData"
+        let notificationName = "ShoppingNeedSaveData"
         NotificationCenter.default.addObserver(self, selector: #selector(notificationAction), name: NSNotification.Name(rawValue: notificationName), object: nil)
     }
     
@@ -128,7 +128,7 @@ class MainViewController :UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "GroceriesViewController", sender: nil)
+        performSegue(withIdentifier: "ShoppingViewController", sender: nil)
     }
 
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -154,9 +154,9 @@ class MainViewController :UITableViewController {
 
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "GroceriesViewController" {
+        if segue.identifier == "ShoppingViewController" {
             if tableView.indexPathForSelectedRow != nil {
-                let desController = segue.destination as! GroceriesViewController
+                let desController = segue.destination as! ShoppingViewController
                 let indexPath = tableView.indexPathForSelectedRow
 //                let listItem = dateSource[indexPath!.row] as ListItem
 //                desController.sections = listItem.grocery

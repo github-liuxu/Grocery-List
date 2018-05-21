@@ -1,7 +1,7 @@
 import UIKit
 
 //
-// Superclass of Grocery List VC, Saved Items List VC, Sections VC
+// Superclass of Shopping List VC, Saved Items List VC, Sections VC
 //
 class ListViewController: UITableViewController {
 
@@ -80,7 +80,7 @@ class ListViewController: UITableViewController {
 //        } catch {
 //            print("Error encoding item array")
 //        }
-        NotificationCenter.default.post(name: NSNotification.Name.init("GroceryNeedSaveData"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name.init("ShoppingNeedSaveData"), object: nil)
 	}
 	
     func loadData() {
@@ -115,7 +115,7 @@ class ListViewController: UITableViewController {
 
 	@objc func dismissKeyboard() {
 		if isEditingTextField {
-			if let cell = tableView.cellForRow(at: textFieldIndexPath) as? GroceryItemCell {
+			if let cell = tableView.cellForRow(at: textFieldIndexPath) as? ShoppingItemCell {
 				if let text = savedText {
 					if cell.textField.text == "" {
 						cell.textField.text = text //	User clicked away from textField but it's empty, restore original text

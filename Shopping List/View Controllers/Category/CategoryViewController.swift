@@ -3,7 +3,7 @@
 List of aisles that appears when 'Edit Aisles' is pressed. Editable, reorderable
 
 - Presented modally from either Grocery List or Saved Items List (Master List)
-- Segues to: AddSectionViewController
+- Segues to: AddCategoryViewController
 
 */
 
@@ -13,7 +13,7 @@ protocol SectionsViewControllerDelegate: class {
     func addSectionCallback(addSections:[Section])
 }
 
-class SectionsViewController: ListViewController, AddSectionViewControllerDelegate {
+class CategoryViewController: ListViewController, AddSectionViewControllerDelegate {
     
     weak var delegate: SectionsViewControllerDelegate?
     var sections = [Section]()                // Data.
@@ -21,7 +21,7 @@ class SectionsViewController: ListViewController, AddSectionViewControllerDelega
     override func viewDidLoad() {
         super.viewDidLoad()
 		
-		title = "Sections List"
+		title = "Category List"
 		
 		// set up navigation bar
 		navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
@@ -48,7 +48,7 @@ class SectionsViewController: ListViewController, AddSectionViewControllerDelega
 		super.viewWillAppear(animated)
 //        loadData()
 		tableView.reloadData()
-		setTableViewBackground(text: "No Sections")
+		setTableViewBackground(text: "No Categorys")
 	}
 
     // MARK: - Table view data source
@@ -91,7 +91,7 @@ class SectionsViewController: ListViewController, AddSectionViewControllerDelega
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
 			if !sections[indexPath.row].groceryItem.isEmpty || !sections[indexPath.row].masterListItem.isEmpty {
-				let alert = UIAlertController(title: "Warning", message: "This section contains items. Are you sure you want to delete it?", preferredStyle: .alert)
+				let alert = UIAlertController(title: "Warning", message: "This Category contains items. Are you sure you want to delete it?", preferredStyle: .alert)
 				alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { action in
 					self.sections.remove(at: indexPath.row)
 					tableView.performBatchUpdates({	tableView.deleteRows(at: [indexPath], with: .automatic)}, completion: { finished in tableView.reloadData() })
@@ -99,12 +99,12 @@ class SectionsViewController: ListViewController, AddSectionViewControllerDelega
 				}))
 				alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
 				self.present(alert, animated: true, completion: nil)
-				setTableViewBackground(text: "No Sectios")
+				setTableViewBackground(text: "No Category")
 			} else {
 				sections.remove(at: indexPath.row)
 				tableView.performBatchUpdates({	tableView.deleteRows(at: [indexPath], with: .automatic)}, completion: { finished in tableView.reloadData() })
 				saveData()
-				setTableViewBackground(text: "No Sectios")
+				setTableViewBackground(text: "No Category")
 			}
         }
     }
@@ -112,7 +112,7 @@ class SectionsViewController: ListViewController, AddSectionViewControllerDelega
     // Move Rows
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
 		let itemToMove = sections[fromIndexPath.row]
-		print("itemToMove.groceryItem.count = \(itemToMove.groceryItem.count)")
+		print("itemToMove.shoppingItem.count = \(itemToMove.groceryItem.count)")
 		sections.remove(at: fromIndexPath.row)
 		sections.insert(itemToMove, at: to.row)
 		saveData()
@@ -121,14 +121,14 @@ class SectionsViewController: ListViewController, AddSectionViewControllerDelega
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if segue.identifier == "AddSection" {
-			let addSectionVC = segue.destination as! AddSectionViewController
+		if segue.identifier == "AddCategory" {
+			let addSectionVC = segue.destination as! AddCategoryViewController
 			addSectionVC.delegate = self
 		}
 	}
 
 	@objc func addPressed(sender: UIBarButtonItem) {
-		performSegue(withIdentifier: "AddSection", sender: nil)
+		performSegue(withIdentifier: "AddCategory", sender: nil)
 	}
 
 	@objc func donePressed(sender: UIBarButtonItem) {
@@ -142,12 +142,12 @@ class SectionsViewController: ListViewController, AddSectionViewControllerDelega
 	// MARK: - Add Section Delegate Methods
 	
 	// Cancel
-	func AddSectionViewControllerDidCancel(_ controller: AddSectionViewController) {
+	func AddSectionViewControllerDidCancel(_ controller: AddCategoryViewController) {
 		navigationController?.popViewController(animated: true)
 	}
 	
 	// Add a section
-	func AddSectionViewController(_ controller: AddSectionViewController, didFinishAdding section: Section) {
+	func AddSectionViewController(_ controller: AddCategoryViewController, didFinishAdding section: Section) {
 		sections.append(section)
 		saveData()
 		tableView.reloadData()
@@ -181,6 +181,6 @@ class SectionsViewController: ListViewController, AddSectionViewControllerDelega
 	}
     
     override func saveData() {
-        NotificationCenter.default.post(name: NSNotification.Name.init("GroceryNeedSaveData"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name.init("ShoppingNeedSaveData"), object: nil)
     }
 }

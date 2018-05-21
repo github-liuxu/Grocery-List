@@ -1,5 +1,5 @@
 //
-//  AddSectionViewController.swift
+//  AddCategoryViewController.swift
 //  Grocery List
 //
 //  Created by Thomas Foster on 9/25/17.
@@ -9,11 +9,11 @@
 import UIKit
 
 protocol AddSectionViewControllerDelegate: class {
-	func AddSectionViewControllerDidCancel(_ controller: AddSectionViewController)
-	func AddSectionViewController(_ controller: AddSectionViewController, didFinishAdding section: Section)
+	func AddSectionViewControllerDidCancel(_ controller: AddCategoryViewController)
+	func AddSectionViewController(_ controller: AddCategoryViewController, didFinishAdding section: Section)
 }
 
-class AddSectionViewController: UITableViewController, UITextFieldDelegate {
+class AddCategoryViewController: UITableViewController, UITextFieldDelegate {
 
 	@IBOutlet weak var textField: UITextField!
 	@IBOutlet weak var doneButton: UIBarButtonItem!
@@ -23,7 +23,7 @@ class AddSectionViewController: UITableViewController, UITextFieldDelegate {
 	override func viewDidLoad() {
         super.viewDidLoad()
 		navigationItem.largeTitleDisplayMode = .never
-		title = "Add an Section"
+		title = "Add an Category"
     }
 	
 	override func viewWillAppear(_ animated: Bool) {

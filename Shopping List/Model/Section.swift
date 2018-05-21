@@ -22,6 +22,10 @@ class Item: NSObject, Codable {
 	var name: String = ""
 	var isInCart: Bool = false
 	var isOnGroceryList: Bool = false
+    var count = 0
+    var price = 0
+    
+    
 	
 	init(name: String) {
 		self.name = name

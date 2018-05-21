@@ -45,7 +45,7 @@ func testData() -> [Section] {
 	var fullList: [Section] = []
 	
 	let produceSection = Section()
-	produceSection.name = "Produce Section"
+	produceSection.name = "General"
 	produceSection.isSelected = true
 	let apples = Item(name: "Apples")
 	let bananas = Item(name: "Bananas")
@@ -104,7 +104,7 @@ func loadDefaultData() -> [Section] {
 	var list: [Section] = []
 	
 	let produceSection = Section()
-	produceSection.name = "Produce Section"
+	produceSection.name = "General"
 	produceSection.isSelected = true
 	let apples = Item(name: "Apples")
 	let bananas = Item(name: "Bananas")

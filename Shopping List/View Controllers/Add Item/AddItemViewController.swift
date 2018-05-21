@@ -30,9 +30,15 @@ class AddItemViewController: UITableViewController, UITextFieldDelegate {
 	// MARK: - Interface Builder
 	
 	@IBOutlet weak var nameTextField: UITextField!
-	@IBOutlet weak var doneButton: UIBarButtonItem!
+    @IBOutlet weak var countTextField: UITextField!
+    @IBOutlet weak var priceTextField: UITextField!
+    @IBOutlet weak var doneButton: UIBarButtonItem!
 	@IBOutlet weak var sectionCell: UITableViewCell!
 	@IBOutlet weak var aisleTextLabel: UILabel!
+    
+    var newText = "";
+    var countNewText = "";
+    var priceNewText = "";
 		
 	// Switches
 	
@@ -74,11 +80,6 @@ class AddItemViewController: UITableViewController, UITextFieldDelegate {
 		// if segue-ing from Grocery List (GL) is on, ML is off and vice versa
 		grocerySwitch.isOn = setGL
 		masterListSwitch.isOn = setML
-        if setGL == true {
-            grocerySwitch.isEnabled = false
-        } else {
-            masterListSwitch.isEnabled = false
-        }
         
 	}
 	
@@ -123,6 +124,8 @@ class AddItemViewController: UITableViewController, UITextFieldDelegate {
 		
 		let trimmedString = nameTextField.text!.trimmingCharacters(in: .whitespaces)
 		let addedItem = Item(name: trimmedString)
+        addedItem.count = (Int)(countNewText)!
+        addedItem.price = (Int)(priceNewText)!
 		addedItem.isOnGroceryList = setGL
 		// Add Item to data model
 		for i in sections.indices {
@@ -176,11 +179,31 @@ class AddItemViewController: UITableViewController, UITextFieldDelegate {
 	
 	
 	func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-		let oldText = nameTextField.text!
-		let stringRange = Range(range, in: oldText)!
-		let newText = oldText.replacingCharacters(in: stringRange, with: string)
+        
+        if textField == nameTextField {
+            let oldText = nameTextField.text!
+            let stringRange = Range(range, in: oldText)!
+            newText = oldText.replacingCharacters(in: stringRange, with: string)
+        }
 		
-		doneButton.isEnabled = !newText.isEmpty
+        if textField == countTextField {
+            let countOldText = countTextField.text!
+            let countStringRange = Range(range, in: countOldText)!
+            countNewText = countOldText.replacingCharacters(in: countStringRange, with: string)
+        }
+        
+        if textField == priceTextField {
+            let oldText = priceTextField.text!
+            let stringRange = Range(range, in: oldText)!
+            priceNewText = oldText.replacingCharacters(in: stringRange, with: string)
+        }
+        
+        if !newText.isEmpty && !countNewText.isEmpty && !priceNewText.isEmpty {
+            doneButton.isEnabled = true
+        } else {
+            doneButton.isEnabled = false
+        }
+		
 		return true
 	}
 

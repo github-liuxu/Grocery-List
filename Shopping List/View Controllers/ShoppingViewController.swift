@@ -4,7 +4,7 @@
 
 import UIKit
 
-class ShoppingViewController: ListViewController, AddItemViewControllerDelegate,SectionsViewControllerDelegate,MasterListViewControllerDelegate {
+class ShoppingViewController: ListViewController, AddItemViewControllerDelegate,SectionsViewControllerDelegate,MasterListViewControllerDelegate,ShoppingItemCellDelegate {
     
     var dataSource:[ListItem]?
     var selectIndexPath:NSIndexPath?
@@ -65,12 +65,12 @@ class ShoppingViewController: ListViewController, AddItemViewControllerDelegate,
         }
         
         
-        addItemLabel.text = "AddItemAmount:0"
-        shoppingLabel.text = "ShoppingAmount:0"
+        addItemLabel.text = "Unchecked:0"
+        shoppingLabel.text = "Checked:0"
         let keyWindow = UIApplication.shared.windows.first!
         keyWindow.addSubview(addItemLabel)
         keyWindow.addSubview(shoppingLabel)
-        
+        tableView.isUserInteractionEnabled = true
         let tap = UITapGestureRecognizer(target: self, action: #selector(tapClick))
         tableView.addGestureRecognizer(tap)
         
@@ -169,56 +169,64 @@ class ShoppingViewController: ListViewController, AddItemViewControllerDelegate,
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
 		let cell = tableView.dequeueReusableCell(withIdentifier: "ShoppingCell", for: indexPath) as! ShoppingItemCell
-
+        cell.delegate = self
+        cell.indexPath = indexPath
 		// get item from data model
 		let item = sections[indexPath.section].groceryItem[indexPath.row]
+        
 		let attributeString = NSMutableAttributedString(string: item.name)
 		attributeString.addAttribute(NSAttributedStringKey.strikethroughStyle, value: 1, range: NSMakeRange(0, attributeString.length))
+        
         let countString = NSMutableAttributedString(string: String(item.count))
-        attributeString.addAttribute(NSAttributedStringKey.strikethroughStyle, value: 1, range: NSMakeRange(0, attributeString.length))
-        let amountString = NSMutableAttributedString(string: String(item.price*item.count))
-        attributeString.addAttribute(NSAttributedStringKey.strikethroughStyle, value: 1, range: NSMakeRange(0, attributeString.length))
+        countString.addAttribute(NSAttributedStringKey.strikethroughStyle, value: 1, range: NSMakeRange(0, countString.length))
+        
+        let amountString = NSMutableAttributedString(string: String(item.price))
+        amountString.addAttribute(NSAttributedStringKey.strikethroughStyle, value: 1, range: NSMakeRange(0, amountString.length))
 
 		// setup text, format, and color
-		if item.isInCart {
-			cell.textField.textColor = UIColor.gray
-			cell.textField.attributedText = attributeString
+        if item.isInCart {
+            cell.nametextField.textColor = UIColor.gray
+            cell.nametextField.attributedText = attributeString
+            
             cell.counTextField.textColor = UIColor.gray
             cell.counTextField.attributedText = countString
+            
             cell.totalAmount.textColor = UIColor.gray
             cell.totalAmount.attributedText = amountString
-		} else {
-			cell.textField.textColor = UIColor.darkText
-			cell.textField.attributedText = nil
-			cell.textField?.text = item.name
+        } else {
+            cell.nametextField.textColor = UIColor.darkText
+            cell.nametextField.attributedText = nil
+            cell.nametextField?.text = item.name
+            
             cell.counTextField.textColor = UIColor.darkText
             cell.counTextField.attributedText = nil
             cell.counTextField?.text = String(item.count)
+            
             cell.totalAmount.textColor = UIColor.darkText
             cell.totalAmount.attributedText = nil
             cell.totalAmount.text = String(item.price)
-		}
+        }
 		cell.checkBox.isChecked = item.isInCart
 		cell.checkBox.setNeedsDisplay()
 		
 		// Action for checkbox tapped
 		cell.check = {
-			item.isInCart = !item.isInCart
+			item.isInCart = !cell.checkBox.isChecked
 			cell.checkBox.isChecked = item.isInCart
 			if item.isInCart {
-				cell.textField.textColor = UIColor.gray
-				cell.textField.attributedText = attributeString
+				cell.nametextField.textColor = UIColor.gray
+				cell.nametextField.attributedText = attributeString
                 cell.counTextField.textColor = UIColor.gray
                 cell.counTextField.attributedText = countString
                 cell.totalAmount.textColor = UIColor.gray
                 cell.totalAmount.attributedText = amountString
 			} else {
-				cell.textField.attributedText = nil
-				cell.textField.textColor = UIColor.darkText
-				cell.textField.text = item.name
+				cell.nametextField.attributedText = nil
+				cell.nametextField.textColor = UIColor.darkText
+				cell.nametextField.text = item.name
                 cell.counTextField.attributedText = nil
                 cell.counTextField.textColor = UIColor.darkText
-                cell.counTextField?.text = String(item.count)
+                cell.counTextField.text = String(item.count)
                 cell.totalAmount.attributedText = nil
                 cell.totalAmount.textColor = UIColor.darkText
                 cell.totalAmount.text = String(item.price)
@@ -382,45 +390,71 @@ class ShoppingViewController: ListViewController, AddItemViewControllerDelegate,
 
 	// MARK: - Text Field Stuff
 
-	override func textFieldDidBeginEditing(_ textField: UITextField) {
-		super.textFieldDidBeginEditing(textField)
+//    override func textFieldDidBeginEditing(_ textField: UITextField) {
+//        super.textFieldDidBeginEditing(textField)
+//        currentTextField = textField
+//        // disable checkbox
+////        let location = textField.convert(textField.bounds.origin, to: self.tableView)
+////        let indexPath = tableView.indexPathForRow(at: location)
+//        let cell = tableView.cellForRow(at: textFieldIndexPath) as! ShoppingItemCell
+//        cell.checkBox.isEnabled = false
+//
+//    }
+//
+//    func textFieldDidEndEditing(_ textField: UITextField) {
+//        let location = textField.convert(textField.bounds.origin, to: self.tableView)
+//        let indexPath = self.tableView.indexPathForRow(at: location)
+//
+//        // enable checkbox
+//        let cell = tableView.cellForRow(at: indexPath!) as! ShoppingItemCell
+//        cell.checkBox.isEnabled = true
+//        isEditingTextField = false
+//
+//        // Store the text
+//        if textField == cell.textField {
+//            let trimmedString = textField.text!.trimmingCharacters(in: .whitespaces)
+//            sections[(indexPath?.section)!].groceryItem[(indexPath?.row)!].name = trimmedString
+//            tableView.reloadData()
+//            saveData()
+//        } else if textField == cell.counTextField {
+//            let trimmedString = Int(currentTextField.text!)
+//            sections[(indexPath?.section)!].groceryItem[(indexPath?.row)!].count = trimmedString!
+//            tableView.reloadData()
+//            saveData()
+//        } else if textField == cell.totalAmount {
+//            let trimmedString = Int(cell.totalAmount.text!)
+//            sections[(indexPath?.section)!].groceryItem[(indexPath?.row)!].price = Int(trimmedString!)
+//            tableView.reloadData()
+//            saveData()
+//        }
+//
+//    }
+    
+    func nameChanged(name: String, indexPath: IndexPath, textField: UITextField) {
         currentTextField = textField
-		// disable checkbox
-//		let location = textField.convert(textField.bounds.origin, to: self.tableView)
-//		let indexPath = tableView.indexPathForRow(at: location)
-		let cell = tableView.cellForRow(at: textFieldIndexPath) as! ShoppingItemCell
-		cell.checkBox.isEnabled = false
-		
-	}
-
-	func textFieldDidEndEditing(_ textField: UITextField) {
-		let location = textField.convert(textField.bounds.origin, to: self.tableView)
-		let indexPath = self.tableView.indexPathForRow(at: location)
-
-        // enable checkbox
-        let cell = tableView.cellForRow(at: indexPath!) as! ShoppingItemCell
-        cell.checkBox.isEnabled = true
-        isEditingTextField = false
-        
-        // Store the text
-        if textField == cell.textField {
-            let trimmedString = textField.text!.trimmingCharacters(in: .whitespaces)
-            sections[(indexPath?.section)!].groceryItem[(indexPath?.row)!].name = trimmedString
-            tableView.reloadData()
-            saveData()
-        } else if textField == cell.counTextField {
-            let trimmedString = Int(currentTextField.text!)
-            sections[(indexPath?.section)!].groceryItem[(indexPath?.row)!].count = trimmedString!
-            tableView.reloadData()
-            saveData()
-        } else if textField == cell.totalAmount {
-            let trimmedString = Int(cell.totalAmount.text!)
-            sections[(indexPath?.section)!].groceryItem[(indexPath?.row)!].price = Int(trimmedString!)
-            tableView.reloadData()
-            saveData()
-        }
-
-	}
+        let trimmedString = name.trimmingCharacters(in: .whitespaces)
+        sections[indexPath.section].groceryItem[indexPath.row].name = trimmedString
+        tableView.reloadData()
+        saveData()
+    }
+    
+    func countChanged(count: String, indexPath: IndexPath, textField: UITextField) {
+        currentTextField = textField
+        let trimmedString = Int(count)
+        sections[indexPath.section].groceryItem[indexPath.row].count = trimmedString!
+        tableView.reloadData()
+        saveData()
+        loadLabelData()
+    }
+    
+    func priceChanged(price: String, indexPath: IndexPath, textField: UITextField) {
+        currentTextField = textField
+        let trimmedString = Int(price)
+        sections[(indexPath.section)].groceryItem[(indexPath.row)].price = trimmedString!
+        tableView.reloadData()
+        saveData()
+        loadLabelData()
+    }
 
 	@objc func textFieldDoneButton(_ sender: UIBarButtonItem) {
 		
@@ -510,17 +544,17 @@ class ShoppingViewController: ListViewController, AddItemViewControllerDelegate,
                     var moneyShopping = 0
                     for section in listItem.grocery {
                         for item in section.groceryItem {
-                            moneyShopping += item.price
+                            moneyShopping += item.price*item.count
                         }
                     }
-                    shoppingLabel.text = "ShoppingAmount:"+String(moneyShopping)
+                    shoppingLabel.text = "Checked:"+String(moneyShopping)
                     var moneyItem = 0
                     for section in listItem.grocery {
                         for item in section.masterListItem {
-                            moneyItem += item.price
+                            moneyItem += item.price*item.count
                         }
                     }
-                    addItemLabel.text = "AddItemAmount:"+String(moneyItem)
+                    addItemLabel.text = "Unchecked:"+String(moneyItem)
                 }
             } catch {
                 print("Error decoding item array")

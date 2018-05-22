@@ -117,8 +117,8 @@ class ListViewController: UITableViewController {
 		if isEditingTextField {
 			if let cell = tableView.cellForRow(at: textFieldIndexPath) as? ShoppingItemCell {
 				if let text = savedText {
-					if cell.textField.text == "" {
-						cell.textField.text = text //	User clicked away from textField but it's empty, restore original text
+					if cell.nametextField.text == "" {
+						cell.nametextField.text = text //	User clicked away from textField but it's empty, restore original text
 					}
 				}
 			} else if let masterListCell = tableView.cellForRow(at: textFieldIndexPath) as? MasterListCell {

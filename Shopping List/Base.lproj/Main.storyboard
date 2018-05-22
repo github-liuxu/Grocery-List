@@ -264,9 +264,6 @@
                                             <nil key="textColor"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
-                                            <connections>
-                                                <outlet property="delegate" destination="AjQ-SO-NWM" id="BAM-PH-wUu"/>
-                                            </connections>
                                         </textField>
                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="count" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lPE-ut-kqA">
                                             <rect key="frame" x="220" y="0.0" width="60" height="43.5"/>
@@ -276,18 +273,12 @@
                                             <nil key="textColor"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <textInputTraits key="textInputTraits" autocapitalizationType="words" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
-                                            <connections>
-                                                <outlet property="delegate" destination="AjQ-SO-NWM" id="Q2x-mR-CoE"/>
-                                            </connections>
                                         </textField>
                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="total amount" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tAP-gB-hhl">
                                             <rect key="frame" x="267.5" y="0.0" width="100.5" height="43.5"/>
                                             <nil key="textColor"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <textInputTraits key="textInputTraits" autocapitalizationType="words" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
-                                            <connections>
-                                                <outlet property="delegate" destination="AjQ-SO-NWM" id="D2A-4S-Rf6"/>
-                                            </connections>
                                         </textField>
                                     </subviews>
                                     <constraints>
@@ -308,7 +299,7 @@
                                 <connections>
                                     <outlet property="checkBox" destination="4K5-dX-loj" id="DmI-7F-NK4"/>
                                     <outlet property="counTextField" destination="lPE-ut-kqA" id="BWy-gW-Mrg"/>
-                                    <outlet property="textField" destination="ShM-Jt-3DV" id="BEI-n9-Ggh"/>
+                                    <outlet property="nametextField" destination="ShM-Jt-3DV" id="mtU-wN-yo3"/>
                                     <outlet property="totalAmount" destination="tAP-gB-hhl" id="r6V-vD-yaq"/>
                                 </connections>
                             </tableViewCell>
@@ -635,18 +626,24 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b4N-rV-YAc">
-                                            <rect key="frame" x="16" y="11" width="0.0" height="22"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DGu-fY-DKF">
+                                            <rect key="frame" x="16" y="0.0" width="130" height="43.5"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="130" id="JAd-6U-bZd"/>
+                                            </constraints>
                                             <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8ep-GP-zLY">
-                                            <rect key="frame" x="187" y="11" width="0.0" height="22"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                        </textField>
+                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Azd-jm-6eu">
+                                            <rect key="frame" x="154" y="0.0" width="111" height="43.5"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="111" id="ih3-ZT-ISK"/>
+                                            </constraints>
                                             <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                        </textField>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mjv-wU-V29">
                                             <rect key="frame" x="359" y="11" width="0.0" height="22"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -655,21 +652,21 @@
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="b4N-rV-YAc" firstAttribute="leading" secondItem="zrc-xP-m6m" secondAttribute="leadingMargin" id="2Wq-1r-b1I"/>
-                                        <constraint firstItem="8ep-GP-zLY" firstAttribute="bottom" secondItem="zrc-xP-m6m" secondAttribute="bottomMargin" id="Bp6-nb-g6S"/>
+                                        <constraint firstAttribute="bottom" secondItem="DGu-fY-DKF" secondAttribute="bottom" id="6Hq-zR-Tq3"/>
+                                        <constraint firstItem="DGu-fY-DKF" firstAttribute="top" secondItem="zrc-xP-m6m" secondAttribute="top" id="9Va-WS-IlY"/>
                                         <constraint firstItem="Mjv-wU-V29" firstAttribute="top" secondItem="zrc-xP-m6m" secondAttribute="topMargin" id="Fig-VH-4UK"/>
-                                        <constraint firstItem="8ep-GP-zLY" firstAttribute="top" secondItem="zrc-xP-m6m" secondAttribute="topMargin" id="HZk-HR-eve"/>
                                         <constraint firstItem="Mjv-wU-V29" firstAttribute="bottom" secondItem="zrc-xP-m6m" secondAttribute="bottomMargin" id="IKY-ZM-N1H"/>
-                                        <constraint firstItem="8ep-GP-zLY" firstAttribute="centerX" secondItem="zrc-xP-m6m" secondAttribute="centerX" id="UQA-Wb-vpg"/>
-                                        <constraint firstItem="b4N-rV-YAc" firstAttribute="top" secondItem="zrc-xP-m6m" secondAttribute="topMargin" id="hpW-iC-Hjd"/>
-                                        <constraint firstItem="b4N-rV-YAc" firstAttribute="bottom" secondItem="zrc-xP-m6m" secondAttribute="bottomMargin" id="iMP-ie-CQl"/>
+                                        <constraint firstAttribute="bottom" secondItem="Azd-jm-6eu" secondAttribute="bottom" id="RK7-Jn-oSp"/>
+                                        <constraint firstItem="Azd-jm-6eu" firstAttribute="top" secondItem="zrc-xP-m6m" secondAttribute="top" id="bwI-9s-VD0"/>
+                                        <constraint firstItem="DGu-fY-DKF" firstAttribute="leading" secondItem="zrc-xP-m6m" secondAttribute="leading" constant="16" id="vaN-pl-rPN"/>
+                                        <constraint firstItem="Azd-jm-6eu" firstAttribute="leading" secondItem="DGu-fY-DKF" secondAttribute="trailing" constant="8" id="whi-5M-atq"/>
                                         <constraint firstItem="Mjv-wU-V29" firstAttribute="trailing" secondItem="zrc-xP-m6m" secondAttribute="trailingMargin" id="yoz-Oh-goA"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="date" destination="8ep-GP-zLY" id="AbL-W5-WJE"/>
+                                    <outlet property="dateTextField" destination="Azd-jm-6eu" id="XKb-sm-9mK"/>
                                     <outlet property="money" destination="Mjv-wU-V29" id="wGz-fW-bzG"/>
-                                    <outlet property="name" destination="b4N-rV-YAc" id="UQG-Sc-j5I"/>
+                                    <outlet property="nameTextField" destination="DGu-fY-DKF" id="0k2-vy-x2J"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -686,7 +683,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UTL-mW-OCb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1132" y="-81"/>
+            <point key="canvasLocation" x="1132" y="-81.409295352323838"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="eQT-b6-Fje">

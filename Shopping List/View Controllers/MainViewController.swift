@@ -3,10 +3,13 @@ import UIKit
 
 import Foundation
 
-class MainViewController :UITableViewController {
+class MainViewController :UITableViewController ,ListItemCellDelegate{
     
     var dateSource = [ListItem]()
     var addButton = UIButton()
+    
+    var currentTextField = UITextField()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,7 +29,7 @@ class MainViewController :UITableViewController {
         navigationController?.navigationBar.isOpaque = true
         
         let keyWindow = UIApplication.shared.windows.first!
-        addButton = UIButton(frame: CGRect(x: view.frame.size.width*3.0/4, y: view.frame.size.height*2.0/3, width: 60, height: 60))
+        addButton = UIButton(frame: CGRect(x: view.frame.size.width*3.0/4, y: view.frame.size.height*4.0/5, width: 60, height: 60))
         addButton.backgroundColor = Color.oldRed
         addButton.setTitleColor(UIColor.white, for: .normal)
         addButton.setTitle("+", for: UIControlState.normal)
@@ -104,7 +107,7 @@ class MainViewController :UITableViewController {
                     var money = 0
                     for section in listItem.grocery {
                         for item in section.groceryItem {
-                            money += item.price
+                            money += item.price*item.count
                         }
                     }
                     listItem.money = String(money)
@@ -135,10 +138,10 @@ class MainViewController :UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ListItemCell", for: indexPath) as! ListItemCell
         
         let listItem = self.dateSource[indexPath.row]
-        
-        
-        cell.name.text = listItem.name
-        cell.date.text = listItem.date
+        cell.delegate = self
+        cell.indexParh = indexPath as IndexPath;
+        cell.nameTextField.text = listItem.name
+        cell.dateTextField.text = listItem.date
         cell.money.text = listItem.money
         
         return cell
@@ -168,15 +171,25 @@ class MainViewController :UITableViewController {
         }
     }
     
-
+    func nameChanged(name:String,indexPath:IndexPath) {
+        let listItem = dateSource[indexPath.row]
+        listItem.name = name;
+        tableView.reloadData()
+        saveData()
+    }
+    
+    func dateChanged(date:String,indexPath:IndexPath) {
+        let listItem = dateSource[indexPath.row]
+        listItem.date = date;
+        tableView.reloadData()
+        saveData()
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ShoppingViewController" {
             if tableView.indexPathForSelectedRow != nil {
                 let desController = segue.destination as! ShoppingViewController
                 let indexPath = tableView.indexPathForSelectedRow
-//                let listItem = dateSource[indexPath!.row] as ListItem
-//                desController.sections = listItem.grocery
                 desController.dataSource = dateSource
                 desController.selectIndexPath = indexPath! as NSIndexPath
             }

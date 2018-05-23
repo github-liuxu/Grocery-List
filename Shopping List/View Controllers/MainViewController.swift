@@ -68,7 +68,38 @@ class MainViewController :UITableViewController ,ListItemCellDelegate{
     
     @objc func addClick() {
         
-        performSegue(withIdentifier: "AddListViewController", sender: nil)
+        let alert = UIAlertController(title: "list info", message: nil, preferredStyle: .alert)
+        let cancleAction = UIAlertAction(title: "Cancle", style: .cancel) { (alertAction:UIAlertAction) in
+            
+        }
+        
+        let okAction = UIAlertAction(title: "OK", style: .default) { (alertAction:UIAlertAction) in
+            let name = alert.textFields?.first
+            let date = alert.textFields?.last
+            let listItem = ListItem()
+            listItem.name = (name?.text)!
+            listItem.date = (date?.text)!
+            let produceSection = Section()
+            produceSection.name = "General"
+            listItem.grocery = [produceSection]
+            
+            self.dateSource.append(listItem)
+            self.saveData()
+            self.loadData()
+            self.tableView.reloadData()
+        }
+        
+        alert.addTextField { (textField:UITextField) in
+            textField.placeholder = "name";
+        }
+        alert.addTextField { (textField:UITextField) in
+            textField.placeholder = "date";
+        }
+        
+        alert.addAction(cancleAction)
+        alert.addAction(okAction)
+        self .present(alert, animated: true, completion: nil)
+//        performSegue(withIdentifier: "AddListViewController", sender: nil)
         
     }
     

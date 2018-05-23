@@ -89,6 +89,7 @@ class ShoppingViewController: ListViewController, AddItemViewControllerDelegate,
         
         addItemLabel.isHidden = false
         shoppingLabel.isHidden = false
+        
         loadLabelData()
 		tableView.reloadData()
 		
@@ -444,7 +445,7 @@ class ShoppingViewController: ListViewController, AddItemViewControllerDelegate,
         sections[indexPath.section].groceryItem[indexPath.row].count = trimmedString!
         tableView.reloadData()
         saveData()
-        loadLabelData()
+
     }
     
     func priceChanged(price: String, indexPath: IndexPath, textField: UITextField) {
@@ -453,7 +454,6 @@ class ShoppingViewController: ListViewController, AddItemViewControllerDelegate,
         sections[(indexPath.section)].groceryItem[(indexPath.row)].price = trimmedString!
         tableView.reloadData()
         saveData()
-        loadLabelData()
     }
 
 	@objc func textFieldDoneButton(_ sender: UIBarButtonItem) {
@@ -528,6 +528,7 @@ class ShoppingViewController: ListViewController, AddItemViewControllerDelegate,
         } catch {
             print("Error encoding item array")
         }
+        loadLabelData()
     }
     
     func loadLabelData() {
@@ -537,28 +538,34 @@ class ShoppingViewController: ListViewController, AddItemViewControllerDelegate,
         if let data = try? Data(contentsOf: path) {
             // 3
             let decoder = PropertyListDecoder()
-            do {
+            
                 // 4
-                let dateSourceTemp = try decoder.decode([ListItem].self, from: data)
-                for listItem in dateSourceTemp {
-                    var moneyShopping = 0
+                let dateSourceTemp = try!decoder.decode([ListItem].self, from: data)
+                var moneyShopping = 0
+                var moneyItem = 0
+            let listItem = dateSourceTemp[(selectIndexPath?.row)!]
+            
                     for section in listItem.grocery {
                         for item in section.groceryItem {
-                            moneyShopping += item.price*item.count
+                            if item.isInCart {
+                                moneyShopping += item.price*item.count
+                            } else {
+                                moneyItem += item.price*item.count
+                            }
+                            
                         }
                     }
-                    shoppingLabel.text = "Checked:"+String(moneyShopping)
-                    var moneyItem = 0
-                    for section in listItem.grocery {
-                        for item in section.masterListItem {
-                            moneyItem += item.price*item.count
-                        }
-                    }
-                    addItemLabel.text = "Unchecked:"+String(moneyItem)
-                }
-            } catch {
-                print("Error decoding item array")
-            }
+                    
+//                    for section in listItem.grocery {
+//                        for item in section.masterListItem {
+//
+//                        }
+//                    }
+                    
+                
+            addItemLabel.text = "Unchecked:"+String(moneyItem)
+            shoppingLabel.text = "Checked:"+String(moneyShopping)
+            
         } }
 	
 }

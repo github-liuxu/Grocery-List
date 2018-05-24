@@ -22,6 +22,7 @@ Segue to
 class AddItemViewController: UITableViewController, UITextFieldDelegate {
 
 	var sections: [Section] = []
+    var dataSource = [Section]()
 	var delegate: AddItemViewControllerDelegate?
 	
 	var setGL: Bool = false		// set by the delegate upon segue
@@ -80,7 +81,7 @@ class AddItemViewController: UITableViewController, UITextFieldDelegate {
 		// if segue-ing from Grocery List (GL) is on, ML is off and vice versa
 		grocerySwitch.isOn = setGL
 		masterListSwitch.isOn = setML
-        
+        loadData()
 	}
 	
 	
@@ -128,6 +129,7 @@ class AddItemViewController: UITableViewController, UITextFieldDelegate {
         addedItem.price = (Int)(priceNewText)!
 		addedItem.isOnGroceryList = setGL
 		// Add Item to data model
+        
 		for i in sections.indices {
 			if sections[i].isSelected {
 				if grocerySwitch.isOn {
@@ -135,12 +137,35 @@ class AddItemViewController: UITableViewController, UITextFieldDelegate {
 				}
 				if masterListSwitch.isOn {
 					sections[i].masterListItem.append(addedItem)
+                    //dataSource is have section
+                    let haveName = haveSectionName(name: sections[i].name)
+                    if haveName.0 {
+                        let sec = haveName.1
+                        sec.masterListItem.append(addedItem)
+                        //save
+                        saveData()
+                    } else {
+                        let sec = haveName.1
+                        sec.name = sections[i].name
+                        sec.masterListItem = [addedItem]
+                        //save
+                        saveData()
+                    }
 				}
 			}
 		}
 		delegate?.didAddItem(self, didAddItem: sections)
 		self.dismiss(animated: true, completion: nil)
 	}
+    
+    func haveSectionName(name:String) -> (Bool,Section) {
+        for section in dataSource {
+            if section.name == name {
+                return (true, section)
+            }
+        }
+        return (false, Section())
+    }
 	
 	@IBAction func cancel() {
 		self.dismiss(animated: true, completion: nil)
@@ -170,7 +195,32 @@ class AddItemViewController: UITableViewController, UITextFieldDelegate {
 	}
 	
 
-	
+    func documentsDirectory() -> URL {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        return paths[0]
+    }
+    
+    func fileURL() -> URL {
+        return documentsDirectory().appendingPathComponent("savelist.plist")
+    }
+    
+    func saveData() {
+        
+        let encoder = PropertyListEncoder()
+        let data = try! encoder.encode(dataSource)
+        try! data.write(to: fileURL(), options: .atomic)
+    }
+    
+    func loadData() {
+        // 1
+        let path = fileURL()
+        // 2
+        if let data = try? Data(contentsOf: path) {
+            // 3
+            let decoder = PropertyListDecoder()
+            dataSource = try! decoder.decode([Section].self, from: data)
+        }
+    }
 	
 	
 	

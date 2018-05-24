@@ -12,9 +12,10 @@ protocol MasterListViewControllerDelegate: class {
 }
 
 class MasterListViewController: ListViewController, AddItemViewControllerDelegate, SectionsViewControllerDelegate {
+    
 	
     weak var delegate: MasterListViewControllerDelegate?
-//    var sections = [Section]()                // Data.
+    var sections = [Section]()                // Data.
 	var currentTextField = UITextField()
 	// MARK: - Life Cycle
     var dateSource = [Section]()
@@ -58,7 +59,7 @@ class MasterListViewController: ListViewController, AddItemViewControllerDelegat
 	
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-//        loadData()
+        loadData()
 		tableView.reloadData()
 		setTableViewBackground(text: "No Items")
 	}
@@ -270,11 +271,13 @@ class MasterListViewController: ListViewController, AddItemViewControllerDelegat
 	
 	
 	func didAddItem(_ controller: AddItemViewController, didAddItem item: [Section]) {
-		dateSource = item
-		saveData()
+        sections = item
+//        saveData()
+//        delegate?.saveSections(sections: sections)
+        loadData()
 		tableView.reloadData()
 	}
-    
+
     // MARK: - Edit Delegate
     func addSectionCallback(addSections:[Section]) {
         dateSource = addSections
@@ -341,7 +344,12 @@ class MasterListViewController: ListViewController, AddItemViewControllerDelegat
     }
     
     override func saveData() {
-        delegate?.saveSections(sections: dateSource)
+        
+        let encoder = PropertyListEncoder()
+        let data = try! encoder.encode(dateSource)
+        try! data.write(to: fileURL(), options: .atomic)
+    
+//        delegate?.saveSections(sections: sections)
     }
     
     override func loadData() {
@@ -351,17 +359,8 @@ class MasterListViewController: ListViewController, AddItemViewControllerDelegat
         if let data = try? Data(contentsOf: path) {
             // 3
             let decoder = PropertyListDecoder()
-            do {
-                // 4
-                dateSource = try decoder.decode([Section].self, from: data)
-//                for section in dateSource {
-//
-//
-//
-//                }
-            } catch {
-                print("Error decoding item array")
-            }
+            dateSource = try! decoder.decode([Section].self, from: data)
+            
         }
     }
     

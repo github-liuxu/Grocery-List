@@ -13,6 +13,7 @@ class ShoppingViewController: ListViewController, AddItemViewControllerDelegate,
     var shoppingLabel = UILabel()
     var addItemLabel = UILabel()
     var currentTextField = UITextField()
+    var saveItems = [Item]()
     
     
 	// MARK: - View Controller Life Cycle
@@ -342,7 +343,7 @@ class ShoppingViewController: ListViewController, AddItemViewControllerDelegate,
             sectionsVC.delegate = self
         } else if segue.identifier == "SavedItemsSegue" {
             let savedItemsVC = segue.destination as! MasterListViewController
-//            savedItemsVC.sections = sections;
+            savedItemsVC.sections = sections;
             savedItemsVC.delegate = self;
         }
 		
@@ -386,8 +387,41 @@ class ShoppingViewController: ListViewController, AddItemViewControllerDelegate,
         list.grocery = sections
 		saveData()
 		tableView.reloadData()
+        
 
 	}
+    
+    // MARK: - SaveItemData
+
+    func getSaveItemfileURL() -> URL {
+        return documentsDirectory().appendingPathComponent("savelist.plist")
+    }
+    
+    func saveItemData(saveItems: [Item]) {
+        let encoder = PropertyListEncoder()
+        do {
+            let data = try encoder.encode(saveItems)
+            try data.write(to: getSaveItemfileURL(), options: .atomic)
+        } catch {
+            print("Error encoding item array")
+        }
+    }
+    
+    func loadSaveItemData() {
+        // 1
+        let path = fileURL()
+        // 2
+        if let data = try? Data(contentsOf: path) {
+            // 3
+            let decoder = PropertyListDecoder()
+            do {
+                // 4
+                saveItems = try decoder.decode([Item].self, from: data)
+            } catch {
+                print("Error decoding item array")
+            }
+        }
+    }
 
 	// MARK: - Text Field Stuff
 
@@ -555,12 +589,6 @@ class ShoppingViewController: ListViewController, AddItemViewControllerDelegate,
                             
                         }
                     }
-                    
-//                    for section in listItem.grocery {
-//                        for item in section.masterListItem {
-//
-//                        }
-//                    }
                     
                 
             addItemLabel.text = "Unchecked:"+String(moneyItem)

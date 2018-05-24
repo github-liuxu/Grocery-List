@@ -342,7 +342,7 @@ class ShoppingViewController: ListViewController, AddItemViewControllerDelegate,
             sectionsVC.delegate = self
         } else if segue.identifier == "SavedItemsSegue" {
             let savedItemsVC = segue.destination as! MasterListViewController
-            savedItemsVC.sections = sections;
+//            savedItemsVC.sections = sections;
             savedItemsVC.delegate = self;
         }
 		

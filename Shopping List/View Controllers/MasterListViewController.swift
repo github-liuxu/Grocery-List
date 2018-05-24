@@ -14,9 +14,10 @@ protocol MasterListViewControllerDelegate: class {
 class MasterListViewController: ListViewController, AddItemViewControllerDelegate, SectionsViewControllerDelegate {
 	
     weak var delegate: MasterListViewControllerDelegate?
-	var sections = [Section]()                // Data.
+//    var sections = [Section]()                // Data.
 	var currentTextField = UITextField()
 	// MARK: - Life Cycle
+    var dateSource = [Section]()
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -91,20 +92,20 @@ class MasterListViewController: ListViewController, AddItemViewControllerDelegat
 	
 	override func numberOfSections(in tableView: UITableView) -> Int {
 
-		return sections.count
+		return dateSource.count
 	}
 	
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
-		return sections[section].isCollapsed ? 0 : sections[section].masterListItem.count
+        return dateSource[section].isCollapsed ? 0 : dateSource[section].masterListItem.count
 	}
 	
 	override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 		
 		if let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: CollapsibleTableViewHeader.identifier) as? CollapsibleTableViewHeader {
-			header.aisle = sections[section]
+			header.aisle = dateSource[section]
 			header.section = section
-			header.button.closed = sections[section].isCollapsed
+			header.button.closed = dateSource[section].isCollapsed
 			header.delegate = self
 
 			return header
@@ -127,7 +128,7 @@ class MasterListViewController: ListViewController, AddItemViewControllerDelegat
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		print("begin cellforrowat")
 		let cell = tableView.dequeueReusableCell(withIdentifier: "MasterListCell", for: indexPath) as! MasterListCell
-		let item = sections[indexPath.section].masterListItem[indexPath.row]
+		let item = dateSource[indexPath.section].masterListItem[indexPath.row]
 		var index: Int = 0
 		cell.textField.text = item.name
         cell.count.text = String(item.count)
@@ -135,8 +136,8 @@ class MasterListViewController: ListViewController, AddItemViewControllerDelegat
 		item.isOnGroceryList = false
 		
 		
-		for i in sections[indexPath.section].groceryItem.indices {
-			if item.name == sections[indexPath.section].groceryItem[i].name {
+		for i in dateSource[indexPath.section].groceryItem.indices {
+			if item.name == dateSource[indexPath.section].groceryItem[i].name {
 				index = i
 				item.isOnGroceryList = true
 				print("for loop 1")
@@ -153,16 +154,16 @@ class MasterListViewController: ListViewController, AddItemViewControllerDelegat
 		cell.plus = {
 			if item.isOnGroceryList == false {
 				item.isOnGroceryList = true
-				self.sections[indexPath.section].groceryItem.append(item)
+				self.dateSource[indexPath.section].groceryItem.append(item)
 				print("added item: item.isOnGroceryList = \(item.isOnGroceryList)")
 			} else {
 				item.isOnGroceryList = false
-				for i in self.sections[indexPath.section].groceryItem.indices {
-					if item.name == self.sections[indexPath.section].groceryItem[i].name {
+				for i in self.dateSource[indexPath.section].groceryItem.indices {
+					if item.name == self.dateSource[indexPath.section].groceryItem[i].name {
 						index = i
 					}
 				}
-				self.sections[indexPath.section].groceryItem.remove(at: index)
+				self.dateSource[indexPath.section].groceryItem.remove(at: index)
 				
 			}
 			cell.plusButton.showPlus = !item.isOnGroceryList
@@ -183,7 +184,7 @@ class MasterListViewController: ListViewController, AddItemViewControllerDelegat
 	// Handle Deleting Rows
 	override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
 		if editingStyle == .delete {
-			sections[indexPath.section].masterListItem.remove(at: indexPath.row)
+			dateSource[indexPath.section].masterListItem.remove(at: indexPath.row)
 			tableView.deleteRows(at: [indexPath], with: .fade)
 			saveData()
 			setTableViewBackground(text: "No Items")
@@ -193,10 +194,10 @@ class MasterListViewController: ListViewController, AddItemViewControllerDelegat
 	
 	// Handle Reordering Rows
 	override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-		let itemToMove = sections[fromIndexPath.section].masterListItem[fromIndexPath.row]
+		let itemToMove = dateSource[fromIndexPath.section].masterListItem[fromIndexPath.row]
 		
-		sections[fromIndexPath.section].masterListItem.remove(at: fromIndexPath.row)
-		sections[to.section].masterListItem.insert(itemToMove, at: to.row)
+		dateSource[fromIndexPath.section].masterListItem.remove(at: fromIndexPath.row)
+		dateSource[to.section].masterListItem.insert(itemToMove, at: to.row)
 		saveData()
 //		perform(#selector(reloadTable), with: self, afterDelay: 0.1)
 	}
@@ -216,8 +217,8 @@ class MasterListViewController: ListViewController, AddItemViewControllerDelegat
 	
 	func deleteAll() {
 		//var indices = [IndexPath]()
-		for i in sections.indices {
-			sections[i].masterListItem.removeAll()
+		for i in dateSource.indices {
+			dateSource[i].masterListItem.removeAll()
 		}
 		saveData()
 		UIView.transition(with: tableView, duration: 0.35, options: .transitionCrossDissolve, animations: { self.tableView.reloadData() }, completion: nil)
@@ -236,20 +237,20 @@ class MasterListViewController: ListViewController, AddItemViewControllerDelegat
 			let addVC = navigation.viewControllers[0] as! AddItemViewController
 			addVC.setML = true
 			addVC.setGL = false
-			addVC.sections = sections
+			addVC.sections = dateSource
 			addVC.delegate = self
         } else if segue.identifier == "AddSection" {
             let navigation = segue.destination as! UINavigationController
             var sectionsVC = CategoryViewController()
             sectionsVC = navigation.viewControllers[0] as! CategoryViewController
-            sectionsVC.sections = sections
+            sectionsVC.sections = dateSource
             sectionsVC.delegate = self
         }
 	}
 	
 	@objc func addPressed() {
 		
-		if sections.isEmpty {
+		if dateSource.isEmpty {
 			let alert = UIAlertController(title: "Whoops!", message: "There are no aisles to put an item in. Press OK to create one.", preferredStyle: .alert)
 			alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
 				self.performSegue(withIdentifier: "AddSection", sender: nil)
@@ -269,14 +270,14 @@ class MasterListViewController: ListViewController, AddItemViewControllerDelegat
 	
 	
 	func didAddItem(_ controller: AddItemViewController, didAddItem item: [Section]) {
-		sections = item
+		dateSource = item
 		saveData()
 		tableView.reloadData()
 	}
     
     // MARK: - Edit Delegate
     func addSectionCallback(addSections:[Section]) {
-        sections = addSections
+        dateSource = addSections
         saveData()
         tableView.reloadData()
     }
@@ -301,18 +302,18 @@ class MasterListViewController: ListViewController, AddItemViewControllerDelegat
         
         if textField == cell.textField {
             let trimmedString = textField.text!.trimmingCharacters(in: .whitespaces)
-            sections[(textFieldIndexPath?.section)!].masterListItem[(textFieldIndexPath?.row)!].name = trimmedString
+            dateSource[(textFieldIndexPath?.section)!].masterListItem[(textFieldIndexPath?.row)!].name = trimmedString
             tableView.reloadData()
             saveData()
             
         } else if textField == cell.count {
             let trimmedString = Int(currentTextField.text!)
-            sections[(textFieldIndexPath?.section)!].masterListItem[(textFieldIndexPath?.row)!].count = trimmedString!
+            dateSource[(textFieldIndexPath?.section)!].masterListItem[(textFieldIndexPath?.row)!].count = trimmedString!
             tableView.reloadData()
             saveData()
         } else if textField == cell.price {
             let trimmedString = Int(cell.price.text!)
-            sections[(textFieldIndexPath?.section)!].masterListItem[(textFieldIndexPath?.row)!].price = Int(trimmedString!)
+            dateSource[(textFieldIndexPath?.section)!].masterListItem[(textFieldIndexPath?.row)!].price = Int(trimmedString!)
             tableView.reloadData()
             saveData()
         }
@@ -320,7 +321,7 @@ class MasterListViewController: ListViewController, AddItemViewControllerDelegat
 
 	func setTableViewBackground(text: String) {
 		
-		if sections.isEmpty {
+		if dateSource.isEmpty {
 			tableView.backgroundView = setupEmptyView(text: text)
 		} else {
 			tableView.backgroundView = nil
@@ -336,11 +337,32 @@ class MasterListViewController: ListViewController, AddItemViewControllerDelegat
     }
     
     override func fileURL() -> URL {
-        return documentsDirectory().appendingPathComponent("list.plist")
+        return documentsDirectory().appendingPathComponent("savelist.plist")
     }
     
     override func saveData() {
-        delegate?.saveSections(sections: sections)
+        delegate?.saveSections(sections: dateSource)
+    }
+    
+    override func loadData() {
+        // 1
+        let path = fileURL()
+        // 2
+        if let data = try? Data(contentsOf: path) {
+            // 3
+            let decoder = PropertyListDecoder()
+            do {
+                // 4
+                dateSource = try decoder.decode([Section].self, from: data)
+//                for section in dateSource {
+//
+//
+//
+//                }
+            } catch {
+                print("Error decoding item array")
+            }
+        }
     }
     
 }
@@ -353,10 +375,10 @@ extension MasterListViewController: CollapsibleTableViewHeaderDelegate {
 	func toggleSection(_ header: CollapsibleTableViewHeader, section: Int) {
 
 		print ("togglesection")
-		let isCollapsed = !sections[section].isCollapsed
+		let isCollapsed = !dateSource[section].isCollapsed
 		
 		// Toggle collapse
-		sections[section].isCollapsed = isCollapsed
+		dateSource[section].isCollapsed = isCollapsed
 		
 		// reload whole section
 		tableView.reloadSections(NSIndexSet(index: section) as IndexSet, with: .automatic)

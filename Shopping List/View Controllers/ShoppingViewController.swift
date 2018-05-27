@@ -6,14 +6,15 @@ import UIKit
 
 class ShoppingViewController: ListViewController, AddItemViewControllerDelegate,SectionsViewControllerDelegate,MasterListViewControllerDelegate,ShoppingItemCellDelegate {
     
-    var dataSource:[ListItem]?
+    var dataSource:[ListItem]?//DataSource
     var selectIndexPath:NSIndexPath?
     
     var sections = [Section]()                // Data.
+    
     var shoppingLabel = UILabel()
     var addItemLabel = UILabel()
     var currentTextField = UITextField()
-    var saveItems = [Item]()
+    var saveSections = [Section]()
     
     
 	// MARK: - View Controller Life Cycle
@@ -36,10 +37,12 @@ class ShoppingViewController: ListViewController, AddItemViewControllerDelegate,
 
 		// Set Up Navigation Items
 		navigationItem.largeTitleDisplayMode = .always
-		navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Saved Items",
+		let save = UIBarButtonItem(title: "Saved Items",
 		                                                    style: .plain,
 		                                                    target: self,
 		                                                    action: #selector(gotoSavedItems))
+        let sharebutton = UIBarButtonItem(title: "Share", style: .plain, target: self, action: #selector(share))
+        navigationItem.rightBarButtonItems = [sharebutton,save]
 
 		// Set Up Toolbar
 		navigationController?.toolbar.tintColor = TOOLBAR_ITEM_COLOR
@@ -76,6 +79,7 @@ class ShoppingViewController: ListViewController, AddItemViewControllerDelegate,
         tableView.addGestureRecognizer(tap)
         
 	}
+    
     
     @objc func tapClick() {
         currentTextField.resignFirstResponder()
@@ -372,6 +376,36 @@ class ShoppingViewController: ListViewController, AddItemViewControllerDelegate,
 	@objc func gotoSavedItems() {
 		performSegue(withIdentifier: "SavedItemsSegue", sender: nil)
 	}
+    
+    @objc func share() {
+        shoppingLabel.isHidden = true
+        addItemLabel.isHidden = true
+        let unCheckText = getUncheck()
+        let shareViewController = UIActivityViewController(activityItems: unCheckText, applicationActivities: [])
+        shareViewController.completionWithItemsHandler = {(activityType, dissmiss, s, error)->Void in
+            
+            self.shoppingLabel.isHidden = false
+            self.addItemLabel.isHidden = false
+        }
+
+        present(shareViewController, animated: true, completion: nil)
+    }
+    
+    func getUncheck() -> [String] {
+        var unChecks = [String]()
+        
+        for sec in sections {
+            let items = sec.groceryItem
+            for item in items {
+                if !item.isInCart {
+                    unChecks.append("name:"+item.name+" count:"+String(item.count)+" price:"+String(item.price)+"")
+                }
+            }
+        }
+        print(unChecks)
+        return unChecks
+    }
+    
 
     @objc func goBack() {
         navigationController?.popViewController(animated: true)
@@ -380,16 +414,63 @@ class ShoppingViewController: ListViewController, AddItemViewControllerDelegate,
 	//
 	// MARK: - Add Item Delegate Methods
 	//
-	
-	func didAddItem(_ controller: AddItemViewController, didAddItem item: [Section]) {
-		sections = item
-        let list = dataSource![(selectIndexPath?.row)!]
-        list.grocery = sections
-		saveData()
-		tableView.reloadData()
+    
+    func didAddSection(_ controller: AddItemViewController, didAddSection section: Section) {
+        addItemWithSectionName(item: section.groceryItem.first!, name: section.name)
+    }
+    
+    func didAddSectionInOtherList(_ controller: AddItemViewController, didAddSection section: Section) {
+        saveItemData(saveSectionItem: section)
         
-
-	}
+    }
+	
+//    func didAddItem(_ controller: AddItemViewController, didAddItem item: [Section]) {
+//        sections = item
+//        let list = dataSource![(selectIndexPath?.row)!]
+//        list.grocery = sections
+//        saveData()
+//        tableView.reloadData()
+//
+//    }
+    
+//    func didAddSection(_ controller: AddItemViewController, didAddSection section: Section) {
+//        saveItemData(saveSectionItem: section)
+//    }
+    
+    func addItemWithSectionName(item:Item, name:String) {
+        var isNameEqual = false
+        
+        for sec in sections {
+            if sec.name == name {
+                item.isInCart = false
+                sec.groceryItem.append(item)
+                isNameEqual = true
+                break
+            }
+        }
+        if !isNameEqual {
+            let section = Section()
+            section.name = name
+            section.groceryItem = [item]
+            item.isInCart = false
+            sections.append(section)
+        }
+        saveData()
+        tableView.reloadData()
+    }
+    func subtractItemWithSectionName(item:Item, name:String) {
+        for sec in sections {
+            if sec.name == name {
+                for i in sec.groceryItem.enumerated() {
+                    if i.element.name == item.name && i.element.count == item.count && i.element.price == item.price {
+                        sec.groceryItem.remove(at: i.offset)
+                    }
+                }
+            }
+        }
+        saveData()
+        tableView.reloadData()
+    }
     
     // MARK: - SaveItemData
 
@@ -397,10 +478,29 @@ class ShoppingViewController: ListViewController, AddItemViewControllerDelegate,
         return documentsDirectory().appendingPathComponent("savelist.plist")
     }
     
-    func saveItemData(saveItems: [Item]) {
+    func saveItemData(saveSectionItem: Section) {
+        loadSaveItemData()
+        var isHaveGroupName = false
+        var section_group = Section()
+        
+        for save_section in saveSections {
+            if save_section.name == saveSectionItem.name {
+                isHaveGroupName = true
+                section_group = save_section
+            }
+        }
+        if isHaveGroupName {
+            section_group.masterListItem.append(saveSectionItem.groceryItem.first!)
+        } else {
+            let s = Section()
+            s.name = saveSectionItem.name
+            s.masterListItem = [saveSectionItem.groceryItem.first] as! [Item]
+            saveSections.append(s)
+        }
+        
         let encoder = PropertyListEncoder()
         do {
-            let data = try encoder.encode(saveItems)
+            let data = try encoder.encode(saveSections)
             try data.write(to: getSaveItemfileURL(), options: .atomic)
         } catch {
             print("Error encoding item array")
@@ -409,14 +509,14 @@ class ShoppingViewController: ListViewController, AddItemViewControllerDelegate,
     
     func loadSaveItemData() {
         // 1
-        let path = fileURL()
+        let path = getSaveItemfileURL()
         // 2
         if let data = try? Data(contentsOf: path) {
             // 3
             let decoder = PropertyListDecoder()
             do {
                 // 4
-                saveItems = try decoder.decode([Item].self, from: data)
+                saveSections = try decoder.decode([Section].self, from: data)
             } catch {
                 print("Error decoding item array")
             }

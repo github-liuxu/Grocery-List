@@ -38,13 +38,13 @@ class MainViewController :UITableViewController ,ListItemCellDelegate{
         addButton.layer.masksToBounds = true
         keyWindow.addSubview(addButton)
         
-        let notificationName = "ShoppingNeedSaveData"
-        NotificationCenter.default.addObserver(self, selector: #selector(notificationAction), name: NSNotification.Name(rawValue: notificationName), object: nil)
+//        let notificationName = "ShoppingNeedSaveData"
+//        NotificationCenter.default.addObserver(self, selector: #selector(notificationAction), name: NSNotification.Name(rawValue: notificationName), object: nil)
     }
     
-    @objc func notificationAction() {
-        self.saveData()
-    }
+//    @objc func notificationAction() {
+//        self.saveData()
+//    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -239,8 +239,8 @@ class MainViewController :UITableViewController ,ListItemCellDelegate{
         saveData()
     }
     
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
+//    deinit {
+//        NotificationCenter.default.removeObserver(self)
+//    }
     
 }

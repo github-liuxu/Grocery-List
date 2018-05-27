@@ -1,7 +1,11 @@
 import UIKit
 
 protocol AddItemViewControllerDelegate: class {
-	func didAddItem(_ controller: AddItemViewController, didAddItem item: [Section])
+//    func didAddItem(_ controller: AddItemViewController, didAddItem item: [Section])
+    
+    func didAddSection(_ controller: AddItemViewController, didAddSection section: Section)
+    
+    func didAddSectionInOtherList(_ controller: AddItemViewController, didAddSection section: Section)
 }
 
 /**
@@ -27,6 +31,8 @@ class AddItemViewController: UITableViewController, UITextFieldDelegate {
 	
 	var setGL: Bool = false		// set by the delegate upon segue
 	var setML: Bool = true		// "	"
+    var fromMaster: Bool = false
+    
 
 	// MARK: - Interface Builder
 	
@@ -61,7 +67,7 @@ class AddItemViewController: UITableViewController, UITextFieldDelegate {
 	@IBAction func defaultsPressed(_ sender: Any) {
 		sections.removeAll()
 		sections = testData()
-		delegate?.didAddItem(self, didAddItem: sections)
+//        delegate?.didAddItem(self, didAddItem: sections)
 		self.dismiss(animated: true, completion: nil)
 	}
 
@@ -127,45 +133,77 @@ class AddItemViewController: UITableViewController, UITextFieldDelegate {
 		let addedItem = Item(name: trimmedString)
         addedItem.count = (Int)(countNewText)!
         addedItem.price = (Int)(priceNewText)!
-		addedItem.isOnGroceryList = setGL
+        addedItem.isOnGroceryList = true
+        let sectionName = aisleTextLabel.text
+        
+        if grocerySwitch.isOn {
+            let s = Section()
+            s.name = sectionName!
+            s.groceryItem = [addedItem]
+            if fromMaster {
+                delegate?.didAddSectionInOtherList(self, didAddSection: s)
+            } else {
+                delegate?.didAddSection(self, didAddSection: s)
+            }
+            
+        }
+        
+        if masterListSwitch.isOn {
+            let s = Section()
+            s.name = sectionName!
+            s.groceryItem = [addedItem]
+            if fromMaster {
+                delegate?.didAddSection(self, didAddSection: s)
+            } else {
+                delegate?.didAddSectionInOtherList(self, didAddSection: s)
+            }
+        }
+        
+//        addedItem.isOnGroceryList = setGL
 		// Add Item to data model
         
-		for i in sections.indices {
-			if sections[i].isSelected {
-				if grocerySwitch.isOn {
-					sections[i].groceryItem.append(addedItem)
-				}
-				if masterListSwitch.isOn {
-					sections[i].masterListItem.append(addedItem)
-                    //dataSource is have section
-                    let haveName = haveSectionName(name: sections[i].name)
-                    if haveName.0 {
-                        let sec = haveName.1
-                        sec.masterListItem.append(addedItem)
-                        //save
-                        saveData()
-                    } else {
-                        let sec = haveName.1
-                        sec.name = sections[i].name
-                        sec.masterListItem = [addedItem]
-                        //save
-                        saveData()
-                    }
-				}
-			}
-		}
-		delegate?.didAddItem(self, didAddItem: sections)
+//        for i in sections.indices {
+//            if sections[i].isSelected {
+//                if grocerySwitch.isOn {
+//                    sections[i].groceryItem.append(addedItem)
+//                }
+//                if masterListSwitch.isOn {
+//                    sections[i].masterListItem.append(addedItem)
+//                    //dataSource is have section
+//                    let haveName = haveSectionName(name: sections[i].name)
+//                    if haveName.0 {
+//                        let sec = haveName.1
+//                        sec.masterListItem.append(addedItem)
+//                        //save
+////                        saveData()
+//                        let s = Section()
+//                        s.name = sections[i].name
+//                        s.groceryItem = [addedItem]
+//
+//                        delegate?.didAddSection(self, didAddSection: s)
+//                    } else {
+//                        let sec = haveName.1
+//                        sec.name = sections[i].name
+//                        sec.masterListItem = [addedItem]
+//                        //save
+////                        saveData()
+//                        delegate?.didAddSection(self, didAddSection: sections[i])
+//                    }
+//                }
+//            }
+//        }
+//        delegate?.didAddItem(self, didAddItem: sections)
 		self.dismiss(animated: true, completion: nil)
 	}
     
-    func haveSectionName(name:String) -> (Bool,Section) {
-        for section in dataSource {
-            if section.name == name {
-                return (true, section)
-            }
-        }
-        return (false, Section())
-    }
+//    func haveSectionName(name:String) -> (Bool,Section) {
+//        for section in dataSource {
+//            if section.name == name {
+//                return (true, section)
+//            }
+//        }
+//        return (false, Section())
+//    }
 	
 	@IBAction func cancel() {
 		self.dismiss(animated: true, completion: nil)

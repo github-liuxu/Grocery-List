@@ -9,9 +9,13 @@ import UIKit
 
 protocol MasterListViewControllerDelegate: class {
     func saveSections(sections:[Section])
+    
+    func addItemWithSectionName(item:Item, name:String)
+    func subtractItemWithSectionName(item:Item, name:String)
 }
 
 class MasterListViewController: ListViewController, AddItemViewControllerDelegate, SectionsViewControllerDelegate {
+    
     
 	
     weak var delegate: MasterListViewControllerDelegate?
@@ -134,41 +138,30 @@ class MasterListViewController: ListViewController, AddItemViewControllerDelegat
 		cell.textField.text = item.name
         cell.count.text = String(item.count)
         cell.price.text = String(item.price)
-		item.isOnGroceryList = false
-		
-		
-		for i in dateSource[indexPath.section].groceryItem.indices {
-			if item.name == dateSource[indexPath.section].groceryItem[i].name {
-				index = i
-				item.isOnGroceryList = true
-				print("for loop 1")
-				break
-			} else {
-				item.isOnGroceryList = false
-				print("for loop 2")
-			}
-		}
+
 		
 		cell.plusButton.showPlus = !item.isOnGroceryList
 		cell.plusButton.setNeedsDisplay()
 		
 		cell.plus = {
 			if item.isOnGroceryList == false {
+                self.delegate?.addItemWithSectionName(item: item, name: self.dateSource[indexPath.section].name)
 				item.isOnGroceryList = true
-				self.dateSource[indexPath.section].groceryItem.append(item)
-				print("added item: item.isOnGroceryList = \(item.isOnGroceryList)")
+//                self.dateSource[indexPath.section].groceryItem.append(item)
+//                print("added item: item.isOnGroceryList = \(item.isOnGroceryList)")
 			} else {
+                self.delegate?.subtractItemWithSectionName(item: item, name: self.dateSource[indexPath.section].name)
 				item.isOnGroceryList = false
-				for i in self.dateSource[indexPath.section].groceryItem.indices {
-					if item.name == self.dateSource[indexPath.section].groceryItem[i].name {
-						index = i
-					}
-				}
-				self.dateSource[indexPath.section].groceryItem.remove(at: index)
+//                for i in self.dateSource[indexPath.section].groceryItem.indices {
+//                    if item.name == self.dateSource[indexPath.section].groceryItem[i].name {
+//                        index = i
+//                    }
+//                }
+//                self.dateSource[indexPath.section].groceryItem.remove(at: index)
 				
 			}
 			cell.plusButton.showPlus = !item.isOnGroceryList
-			self.saveData()
+//            self.saveData()
 			print("\(item.isOnGroceryList)")
 		}
 		
@@ -239,6 +232,7 @@ class MasterListViewController: ListViewController, AddItemViewControllerDelegat
 			addVC.setML = true
 			addVC.setGL = false
 			addVC.sections = dateSource
+            addVC.fromMaster = true
 			addVC.delegate = self
         } else if segue.identifier == "AddSection" {
             let navigation = segue.destination as! UINavigationController
@@ -270,13 +264,38 @@ class MasterListViewController: ListViewController, AddItemViewControllerDelegat
 	// MARK: - Add Item Delegate Methods
 	
 	
-	func didAddItem(_ controller: AddItemViewController, didAddItem item: [Section]) {
-        sections = item
-//        saveData()
-//        delegate?.saveSections(sections: sections)
-        loadData()
-		tableView.reloadData()
-	}
+//    func didAddItem(_ controller: AddItemViewController, didAddItem item: [Section]) {
+//        sections = item
+////        saveData()
+////        delegate?.saveSections(sections: sections)
+//        loadData()
+//        tableView.reloadData()
+//    }
+    
+    func didAddSection(_ controller: AddItemViewController, didAddSection section: Section) {
+        for sec in dateSource {
+            if sec.name == section.name {
+                sec.masterListItem.append(section.groceryItem.first!)
+            }
+        }
+        tableView.reloadData()
+        saveData()
+    }
+    
+    func didAddSectionInOtherList(_ controller: AddItemViewController, didAddSection section: Section) {
+        let item = section.groceryItem.first
+        for sec in dateSource {
+            if sec.name == section.name {
+                for it in sec.masterListItem {
+                    if it.name == item?.name && it.count == item?.count && it.price == item?.price {
+                        it.isOnGroceryList = false
+                    }
+                }
+            }
+        }
+        tableView.reloadData()
+        delegate?.addItemWithSectionName(item: section.groceryItem.first!, name: section.name)
+    }
 
     // MARK: - Edit Delegate
     func addSectionCallback(addSections:[Section]) {
@@ -361,12 +380,34 @@ class MasterListViewController: ListViewController, AddItemViewControllerDelegat
             let decoder = PropertyListDecoder()
             dateSource = try! decoder.decode([Section].self, from: data)
             
+            for section in dateSource {
+                for item in section.masterListItem {
+                    
+                    let isHave = isHaveItemInSections(item: item,sec: section)
+                    if isHave {
+                        item.isOnGroceryList = true
+                    } else {
+                        item.isOnGroceryList = false
+                    }
+                }
+            }
         }
     }
     
+    func isHaveItemInSections(item:Item, sec:Section) -> Bool {
+        var isHave = false
+        for section in sections {
+            if section.name == sec.name {
+                for it in section.groceryItem {
+                    if it.name == item.name && it.count == item.count && it.price == item.price {
+                        isHave = true
+                    }
+                }
+            }
+        }
+        return isHave
+    }
 }
-
-
 
 
 extension MasterListViewController: CollapsibleTableViewHeaderDelegate {
